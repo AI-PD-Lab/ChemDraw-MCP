@@ -362,9 +362,16 @@ class AgentRun:
         self.cancelled = True
         if self.proc and self.proc.poll() is None:
             try:
-                self.proc.terminate()
+                if _win():
+                    # terminate() only ends the launcher (.cmd / node shim); take the whole process tree down
+                    subprocess.run(["taskkill", "/F", "/T", "/PID", str(self.proc.pid)], capture_output=True, timeout=15)
+                else:
+                    self.proc.terminate()
             except Exception:
-                pass
+                try:
+                    self.proc.kill()
+                except Exception:
+                    pass
 
     def wait(self, timeout: Optional[float] = None):
         if self.thread:
