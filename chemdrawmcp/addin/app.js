@@ -34,7 +34,10 @@ var MODELS = {
            ['claude-haiku-5-5', 'haiku-5-5'], ['claude-fable-5-1', 'fable-5-1']],
   codex: [['', 'default'], ['gpt-6-sol', 'gpt-6-sol'], ['gpt-6', 'gpt-6']]
 };
-var EFFORTS = ['', 'low', 'medium', 'high', 'xhigh', 'max'];
+var EFFORT_DEFAULTS = {   // overridden by the bridge's settings snapshot (effort_choices)
+  claude: ['', 'low', 'medium', 'high', 'xhigh', 'max'],
+  codex: ['', 'minimal', 'low', 'medium', 'high', 'xhigh']
+};
 var SLASH = [
   ['/model', 'choose provider, model and effort'],
   ['/clear', 'new conversation'],
@@ -108,7 +111,7 @@ var codeSeq = 0;
 var codeStore = {};          // id -> {method, code} for the "insert into document" buttons
 var bridge = {
   state: 'unknown',          // unknown | ok | down | unauthorized
-  version: '', backends: {}, default_backend: '', runs_active: 0, sessions: {},
+  version: '', backends: {}, default_backend: '', runs_active: 0, sessions: {}, effort_choices: {},
   settings: { claude: { model: '', effort: '' }, codex: { model: '', effort: '' } }
 };
 
@@ -141,6 +144,10 @@ function show(node) { node.classList.remove('hidden'); }
 function hide(node) { node.classList.add('hidden'); }
 function shortModel(m) { return (m || 'default').replace(/^claude-/, ''); }
 function settingsFor(b) { return bridge.settings[b] || { model: '', effort: '' }; }
+function effortChoices(b) {
+  var fromBridge = bridge.effort_choices && bridge.effort_choices[b];
+  return (Array.isArray(fromBridge) && fromBridge.length) ? fromBridge : (EFFORT_DEFAULTS[b] || EFFORT_DEFAULTS.claude);
+}
 function modelLabel(b) {
   b = b || backend;
   var st = settingsFor(b);
@@ -316,7 +323,8 @@ function applySettings(s) {
       };
     }
   });
-  if (typeof s.default_backend === 'string') bridge.default_backend = s.default_backend;
+  if (typeof src.default_backend === 'string') bridge.default_backend = src.default_backend;
+  if (src.effort_choices && typeof src.effort_choices === 'object') bridge.effort_choices = src.effort_choices;
 }
 
 function sessionIdOf(data) {
@@ -347,7 +355,9 @@ function checkHealth() {
     bridge.runs_active = (h && h.runs_active) || 0;
     if (h && typeof h.default_backend === 'string') bridge.default_backend = h.default_backend;
     applySettings(h && h.settings);
-    if (!everConnected) { everConnected = true; firstConnect(); }
+    var hadSessions = !!(h && h.sessions && typeof h.sessions === 'object');
+    if (hadSessions) BACKENDS.forEach(function (b) { bridge.sessions[b] = sessionIdOf(h.sessions[b]); });
+    if (!everConnected) { everConnected = true; firstConnect(); if (!hadSessions) fetchSessions(); }
     if (was !== 'ok') { renderBridge(); renderWelcome(); }
     updateFooter();
   }).catch(function (e) {
@@ -373,7 +383,7 @@ function firstConnect() {
       pushEntry({ k: 'note', t: 'agent: ' + modelLabel() + ' (the previous provider is not installed on this machine)' });
     }
   }
-  fetchSessions();
+  renderWelcome();
 }
 
 // ------------------------------------------------------------------------------------------------
@@ -783,7 +793,7 @@ function renderChooser() {
   }
   html += '<div class="hint">other: /model &lt;name&gt;</div></div>';
   html += '<div class="col"><div class="col-title">Effort</div>';
-  EFFORTS.forEach(function (e) {
+  effortChoices(b).forEach(function (e) {
     var on = e === (st.effort || '');
     html += '<button type="button" class="row' + (on ? ' on' : '') + '" data-effort="' + escAttr(e) + '">' +
       (on ? '● ' : '  ') + (e || 'default') + '</button>';
@@ -990,7 +1000,7 @@ function tick() {
 
 function beginRun(prompt, context) {
   var me = { id: null, es: null, t0: Date.now(), verb: VERBS[history.length % VERBS.length], spin: 0,
-             stats: null, draft: null, finished: false, cancelled: false, timer: null };
+             stats: null, draft: null, lastDraft: null, finished: false, cancelled: false, timer: null };
   run = me;
   show(el.status);
   tick();
@@ -1091,10 +1101,12 @@ function toolOf(data) {
 
 function onEvent(me, kind, data) {
   if (me !== run || me.finished) return;
+  var prevKind = me.lastKind;
+  me.lastKind = kind;
   switch (kind) {
     case 'session': {
       var id = sessionIdOf(data);
-      if (id) { bridge.sessions[backend] = id; store.set('session.' + backend, id); }
+      if (id) bridge.sessions[backend] = id;
       break;
     }
     case 'delta':
@@ -1123,13 +1135,28 @@ function onEvent(me, kind, data) {
       if (data && typeof data === 'object' && !me.stats && (data.stats || data.usage || data.total_cost_usd !== undefined)) {
         me.stats = data.stats || data;
       }
-      finalizeDraft(me, text);
-      finishRun(false, me);
+      // the final text was already delivered as a 'text' event; only an open draft is completed with it
+      if (me.draft) finalizeDraft(me, text);
+      // like the bridge: a turn whose last event before 'done' was an error (crash, cancel) failed
+      finishRun(prevKind === 'error' || me.cancelled, me);
       break;
     }
-    case 'end':
-      finishRun(false, me);
+    case 'end': {
+      var status = (data && typeof data === 'object') ? String(data.status || '') : '';
+      if (status === 'bridge_stopping') {
+        pushEntry({ k: 'error', t: 'the agent bridge is shutting down' });
+        finishRun(true, me);
+        break;
+      }
+      if (data && typeof data === 'object' && data.error && prevKind !== 'error') {
+        pushEntry({ k: 'error', t: String(data.error) });
+      }
+      if (me.draft && data && typeof data === 'object' && typeof data.final_text === 'string' && data.final_text) {
+        finalizeDraft(me, data.final_text);
+      }
+      finishRun(status === 'error' || status === 'cancelled' || !!(data && data.error), me);
       break;
+    }
     default:
       break;
   }
@@ -1152,10 +1179,21 @@ function finalizeDraft(me, text) {
     if (text) me.draft.t = text;
     me.draft.live = false;
     rerenderEntry(me.draft);
+    me.lastDraft = me.draft;
     me.draft = null;
     saveTranscript();
   } else if (text) {
-    pushEntry({ k: 'assistant', t: text });
+    // a complete 'text' for a message whose draft a tool call already closed: never show it twice
+    var prev = me.lastDraft;
+    var prevText = prev && typeof prev.t === 'string' ? prev.t.trim() : '';
+    if (prevText && text.trim() === prevText) return;
+    if (prevText && text.indexOf(prevText) === 0) {
+      prev.t = text;
+      rerenderEntry(prev);
+      saveTranscript();
+      return;
+    }
+    me.lastDraft = pushEntry({ k: 'assistant', t: text });
   }
 }
 
@@ -1213,11 +1251,13 @@ function slash(text) {
       break;
     case '/model':
       if (!rest) { openChooser(); break; }
+      var toks = rest.split(/\s+/);
       var b = backend;
+      toks.forEach(function (tok) { if (BACKENDS.indexOf(tok) >= 0) b = tok; });
       var opts = {};
-      rest.split(/\s+/).forEach(function (tok) {
-        if (BACKENDS.indexOf(tok) >= 0) b = tok;
-        else if (tok && EFFORTS.indexOf(tok) > 0) opts.effort = tok;
+      toks.forEach(function (tok) {
+        if (BACKENDS.indexOf(tok) >= 0) return;
+        if (tok && effortChoices(b).indexOf(tok) > 0) opts.effort = tok;
         else if (tok === 'default' || tok === 'none') opts.model = '';
         else if (tok) opts.model = tok;
       });
@@ -1248,7 +1288,6 @@ function init() {
   history = Array.isArray(savedHistory) ? savedHistory.filter(function (h) { return typeof h === 'string'; }).slice(-MAX_HISTORY) : [];
   histPos = history.length;
   bridge.sessions = {};
-  BACKENDS.forEach(function (b) { var s = store.get('session.' + b, ''); if (typeof s === 'string') bridge.sessions[b] = ''; });
   loadTranscript();
   renderAll();
   updateFooter();
@@ -1270,6 +1309,11 @@ if (document.readyState === 'loading') document.addEventListener('DOMContentLoad
 else init();
 
 // a few internals for development / debugging in a plain browser
-window.AgentChat = { submit: submit, stop: stop, choose: choose, checkHealth: checkHealth, bridge: bridge,
-                     entries: function () { return entries; }, backend: function () { return backend; } };
+window.AgentChat = {
+  submit: submit, stop: stop, choose: choose, checkHealth: checkHealth, bridge: bridge, slash: slash,
+  entries: function () { return entries; }, backend: function () { return backend; }, run: function () { return run; },
+  event: function (kind, data) { if (run) onEvent(run, kind, data); },
+  render: { mdBlock: mdBlock, mdInline: mdInline, toolCallHtml: toolCallHtml, preview: preview, textOf: textOf,
+            resultTextOf: resultTextOf, toolOf: toolOf }
+};
 })();

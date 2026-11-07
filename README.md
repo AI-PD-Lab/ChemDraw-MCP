@@ -69,6 +69,7 @@ Typical agent flow: `status` → `draw_*` / `insert` → `read_document` → `re
 | tool | purpose |
 |------|---------|
 | `status`, `launch`, `quit_chemdraw`, `activate_chemdraw` | discover / start ChemDraw; open documents; pending dialogs |
+| *Agent Chat add-in* + `chemdraw-agent-bridge` | Claude / Codex chat panel inside ChemDraw (see below) |
 | `documents`, `new_document(style)`, `open_document`, `close_document`, `save_document(path, format)` | document lifecycle; export to cdxml, cdx, mol / sdf / rxn (V2000) and molv3000 / sdfv3000 / rxnv3000, rdf, cml, ct, png, svg, pdf, eps, tiff, gif, jpeg, bmp, 3mf |
 | `draw_structures(structures, labels, style, columns)` | grid of molecules from SMILES / InChI / molblock / CDXML / names |
 | `draw_reaction(reaction | reactants+products, reagents_above, conditions_below, arrow, labels)` | one reaction with reagents, conditions, yields, atom mapping; arrows: full, equilibrium, retrosynthetic, double, dashed, bold, nogo, hollow |
@@ -115,6 +116,30 @@ The `style` argument of the drawing tools uses the settings of the stationery sh
 | `CHEMDRAWMCP_LIVE=1` | enable the live ChemDraw tests (`pytest tests/test_live_macos.py -m live`) |
 | `CHEMDRAWMCP_NO_FONTS=1`, `CHEMDRAWMCP_FONT_DIR` | force the heuristic text metrics / add a font directory for layout measurements |
 | `CHEMDRAWMCP_CDX_PAIRS`, `CHEMDRAWMCP_SAMPLES` | directories with CDX/CDXML pairs and ChemDraw sample drawings for the reader tests |
+
+## Agent Chat inside ChemDraw
+
+Like the PyMOL / ChimeraX panels in mol-mcp, ChemDraw gets a Claude-Code-style chat window of its own: an add-in
+(**Add-ins ▸ Agent Chat**) that runs your installed Claude Code or Codex CLI through a small local bridge and streams
+the agent's text, every `⏺ chemdraw/…` tool call with a collapsed `⎿` result preview, an animated status line and the
+cost/tokens when a turn is done.  The agent uses the `chemdraw` MCP server, so it acts on the document you are looking
+at; the panel also attaches your current selection (as SMILES) to each prompt.
+
+```
+python3 install.py            # on a Mac/PC with ChemDraw this also installs the add-in and a Scripts-menu starter
+                              # (add --launch-agent to keep the bridge running permanently via launchd)
+```
+
+1. Restart ChemDraw once (add-ins are read at launch).
+2. **Scripts ▸ Start Agent Bridge** (or run `chemdraw-agent-bridge` in a terminal; `--check` shows which CLIs it found).
+3. **Add-ins ▸ Agent Chat**.  Enter sends, Shift+Enter newline, Esc interrupts, ↑/↓ recall prompts; `/model` picks
+   provider · model · effort, `/claude` and `/codex` switch, `/clear` starts a new conversation, `/stop`, `/help`.
+
+The bridge listens on `127.0.0.1:47325` only (`CHEMDRAWMCP_BRIDGE_PORT`), requires a per-install token
+(`~/.chemdrawmcp/bridge_token`, baked into the add-in's `config.js`) and refuses requests from web origins, so other
+websites cannot drive it.  Conversations resume across panel reopenings (`~/.chemdrawmcp/agent_sessions.json`).
+CLI locations are found automatically (`CHEMDRAWMCP_CLAUDE_EXE` / `CHEMDRAWMCP_CODEX_EXE` override); the agent runs
+with `~/.chemdrawmcp/workspace` as its working directory (`CHEMDRAWMCP_BRIDGE_CWD`).  Details: `docs/agent-chat.md`.
 
 ## How it works
 

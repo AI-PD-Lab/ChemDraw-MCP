@@ -91,6 +91,20 @@ def config_js(port: int, token: str) -> str:
             "window.CHEMDRAWMCP_BRIDGE = %s;\n" % body)
 
 
+
+def _write_if_changed(path: str, data: bytes) -> bool:
+    """Write ``data`` to ``path`` only when the content differs (installer reruns must not touch unchanged files)."""
+    try:
+        with open(path, "rb") as f:
+            if f.read() == data:
+                return False
+    except OSError:
+        pass
+    with open(path, "wb") as f:
+        f.write(data)
+    return True
+
+
 def build_addin(dest_dir: str, port: int, token: str, name: str = DEFAULT_NAME) -> str:
     """Copy the add-in package into ``dest_dir/<name>/`` and write ``config.js``; return that folder."""
     if not name or any(c in name for c in '/\\:*?"<>|') or name.strip() != name:
@@ -101,20 +115,15 @@ def build_addin(dest_dir: str, port: int, token: str, name: str = DEFAULT_NAME) 
         src = os.path.join(ADDIN_SRC, fname)
         if not os.path.isfile(src):
             raise FileNotFoundError("add-in file missing from the package: %s" % src)
-        shutil.copyfile(src, os.path.join(target, fname))
+        _write_if_changed(os.path.join(target, fname), open(src, 'rb').read())
     meta = metadata()
     meta["name"] = name
     meta["menuItemText"] = name
-    with open(os.path.join(target, METADATA_FILE), "w", encoding="utf-8") as f:
-        json.dump(meta, f, indent=2, ensure_ascii=False)
-        f.write("\n")
+    _write_if_changed(os.path.join(target, METADATA_FILE), (json.dumps(meta, indent=2) + "\n").encode("utf-8"))
     cfg_path = os.path.join(target, CONFIG_FILE)
-    with open(cfg_path, "w", encoding="utf-8") as f:
-        f.write(config_js(port, token))
-    try:
+    _write_if_changed(cfg_path, config_js(port, token).encode("utf-8"))
+    if not sys.platform.startswith("win"):
         os.chmod(cfg_path, 0o600)   # the token is a secret
-    except OSError:
-        pass
     return target
 
 

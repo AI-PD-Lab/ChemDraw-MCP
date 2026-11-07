@@ -11,7 +11,9 @@ Steps (all idempotent; choose with flags, default = everything that applies):
                      or $CLAUDE_CONFIG_DIR/.claude.json when that variable is set)
   --codex            register with Codex CLI (~/.codex/config.toml, or $CODEX_HOME/config.toml)
   --claude-desktop   register with Claude Desktop (if its config file exists)
-  --uninstall        remove the registrations
+  --addin            install the 'Agent Chat' ChemDraw add-in + Scripts-menu bridge starter (default when ChemDraw is found)
+  --launch-agent     keep the agent bridge running via launchd (macOS, opt-in)
+  --uninstall        remove the registrations (and the add-in / launch agent)
   --dry-run          show what would be done
   --check            only report what was found
 """
@@ -380,6 +382,17 @@ def check():
     log("configs:   Claude Code    %s" % claude_config_path())
     log("           Codex CLI      %s" % codex_config_path())
     log("           Claude Desktop %s" % (claude_desktop_config_path() or "(no config file found)"))
+    try:
+        from . import addin_builder, addin_install
+        from .bridge import server as bridge_server
+        inst = addin_builder.installed_addin_dir(addin_install.ADDIN_NAME)
+        log("add-in:    %s" % (inst if inst and os.path.isdir(inst) else "not installed (python3 install.py --addin)"))
+        info = bridge_server.bridge_info()
+        running = bridge_server.is_bridge_running(info) if info else False
+        log("bridge:    %s" % ((info.get("url") or "http://127.0.0.1:%s" % info.get("port")) + " (running)" if running
+                               else "not running (Scripts > Start Agent Bridge, or chemdraw-agent-bridge)"))
+    except Exception as e:  # pragma: no cover - optional pieces
+        log("add-in:    (unavailable: %s)" % e)
 
 
 def main(argv=None):
@@ -388,6 +401,8 @@ def main(argv=None):
     ap.add_argument("--claude", action="store_true")
     ap.add_argument("--codex", action="store_true")
     ap.add_argument("--claude-desktop", action="store_true")
+    ap.add_argument("--addin", action="store_true", help="install the 'Agent Chat' ChemDraw add-in and the Scripts-menu bridge starter")
+    ap.add_argument("--launch-agent", action="store_true", help="also install a launchd agent that keeps the bridge running (macOS)")
     ap.add_argument("--uninstall", action="store_true")
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--check", action="store_true", help="only report what was found")
@@ -395,7 +410,8 @@ def main(argv=None):
     check()
     if a.check:
         return 0
-    chosen = any([a.claude, a.codex, a.claude_desktop])
+    chosen = any([a.claude, a.codex, a.claude_desktop, a.addin, a.launch_agent])
+    addin_possible = bool(discovery.find_chemdraw()) and sys.platform in ("darwin", "win32")
     do = lambda flag: (flag or not chosen)  # noqa: E731
     dry = a.dry_run
     if dry:
@@ -407,6 +423,13 @@ def main(argv=None):
             register_codex(dry, remove=True)
         if do(a.claude_desktop):
             register_claude_desktop(dry, remove=True)
+        if a.addin or (not chosen and addin_possible):
+            from . import addin_install
+            addin_install.uninstall_addin(dry)
+            addin_install.uninstall_scripts_menu(dry)
+        if a.launch_agent or not chosen:
+            from . import addin_install
+            addin_install.uninstall_launch_agent(dry)
         log("\nDone. The chemdraw server registrations were removed%s." % (" (dry run)" if dry else ""))
         return 0
     if do(a.claude):
@@ -415,6 +438,13 @@ def main(argv=None):
         register_codex(dry)
     if do(a.claude_desktop):
         register_claude_desktop(dry)
+    if a.addin or (not chosen and addin_possible):
+        from . import addin_install
+        addin_install.install_addin(dry)
+        addin_install.install_scripts_menu(dry)
+    if a.launch_agent:
+        from . import addin_install
+        addin_install.install_launch_agent(dry)
     log("\nDone%s. Verify with:" % (" (dry run)" if dry else ""))
     if do(a.claude):
         log("  Claude Code:    /mcp  (restart running sessions)")
@@ -422,6 +452,8 @@ def main(argv=None):
         log("  Codex CLI:      codex mcp list")
     if do(a.claude_desktop) and claude_desktop_config_path():
         log("  Claude Desktop: restart the app, then check Settings > Developer")
+    if a.addin or (not chosen and addin_possible):
+        log("  ChemDraw:       restart it, then Add-ins > Agent Chat (start the bridge via Scripts > Start Agent Bridge)")
     log("Then ask the agent for the chemdraw `status` tool%s." % (
         "" if discovery.find_chemdraw() or not sys.platform.startswith("linux") else " (headless mode on Linux)"))
     return 0

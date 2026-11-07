@@ -11,6 +11,12 @@ First release of `chemdrawmcp`, an MCP server that gives Claude Code, Codex and 
 ChemDraw (Revvity Signals, formerly PerkinElmer/CambridgeSoft).
 
 ### Added
+- **Agent Chat inside ChemDraw**: a ChemDraw add-in (`Add-ins ▸ Agent Chat`, Claude-Code-style transcript with
+  `⏺` tool calls, `⎿` result previews, status spinner, `/model`, `/claude`, `/codex`, `/clear`, `/stop`, `/help`) backed by
+  `chemdraw-agent-bridge`, a localhost HTTP/SSE server that runs the installed Claude Code / Codex CLI with the
+  `chemdraw` MCP server; the panel attaches the current selection via the ChemDraw add-in JavaScript API.  Installed by
+  `python3 install.py` (`--addin`, optional `--launch-agent`) together with a `Scripts ▸ Start Agent Bridge` item.
+- macOS backend no longer activates ChemDraw (windows are raised inside the app); ChemDraw is launched hidden.
 
 - **Live ChemDraw backend** for macOS, driving the application's AppleScript dictionary through JXA: documents,
   atoms/bonds/molecules, captions, arrows, the selection (SMILES, formula, MW, exact mass, elemental analysis),
