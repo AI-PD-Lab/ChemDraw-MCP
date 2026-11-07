@@ -30,7 +30,7 @@ reaction SMILES so the agent knows what is on the page before editing it.
 ## Install
 
 ```bash
-git clone <this repo> chemdraw-mcp && cd chemdraw-mcp
+git clone git@github.com:Jetzu/ChemDraw-MCP.git chemdraw-mcp && cd chemdraw-mcp   # or https://github.com/Jetzu/ChemDraw-MCP.git
 python3 install.py           # creates .venv, installs the package (+ rdkit), registers the `chemdraw` server with
                              # Claude Code, Codex CLI and Claude Desktop (if present)
 python3 install.py --check   # only report what was found (ChemDraw app, version, rdkit, config paths)

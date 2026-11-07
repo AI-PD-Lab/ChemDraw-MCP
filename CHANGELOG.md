@@ -77,3 +77,5 @@ ChemDraw (Revvity Signals, formerly PerkinElmer/CambridgeSoft).
 - Struct=Name, NMR prediction and some import formats depend on the ChemDraw edition/licence.
 - The Windows backend was written from the published object model without a Windows machine at hand; it offers a
   curated table of 19 commands, and `menus`/`do_menu`, `check_structure` and `predict_nmr` are macOS-only.
+
+[0.1.0]: https://github.com/Jetzu/ChemDraw-MCP/releases/tag/v0.1.0

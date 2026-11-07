@@ -16,6 +16,11 @@ dependencies = [
 windows = ["pywin32>=306; sys_platform == 'win32'"]
 dev = ["pytest>=7"]
 
+[project.urls]
+Homepage = "https://github.com/Jetzu/ChemDraw-MCP"
+Repository = "https://github.com/Jetzu/ChemDraw-MCP"
+Issues = "https://github.com/Jetzu/ChemDraw-MCP/issues"
+
 [project.scripts]
 chemdraw-mcp = "chemdrawmcp.server:main"
 chemdrawmcp-install = "chemdrawmcp.install:main"
