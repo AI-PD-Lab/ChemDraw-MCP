@@ -1,0 +1,21 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+dist/
+build/
+
+# Tooling caches
+.pytest_cache/
+.ruff_cache/
+
+# Project outputs (renders, CDXML files written by the headless engine, example outputs)
+/renders/
+/examples/output/
+
+# Backups written by install.py when it edits MCP client config files
+*.chemdrawmcp-backup
+
+# OS
+.DS_Store

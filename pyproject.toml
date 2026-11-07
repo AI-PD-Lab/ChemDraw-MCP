@@ -1,0 +1,56 @@
+[project]
+name = "chemdrawmcp"
+version = "0.1.0"
+description = "MCP server that gives Claude Code, Codex and other agents full access to ChemDraw: structures, reactions, schemes, rendering, naming, properties and format conversion"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "PolyForm-Noncommercial-1.0.0" }
+dependencies = [
+    "mcp>=1.10",
+    "numpy>=1.24",
+    "pillow>=10",
+    "rdkit>=2023.9",
+]
+
+[project.optional-dependencies]
+windows = ["pywin32>=306; sys_platform == 'win32'"]
+dev = ["pytest>=7"]
+
+[project.scripts]
+chemdraw-mcp = "chemdrawmcp.server:main"
+chemdrawmcp-install = "chemdrawmcp.install:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["chemdrawmcp"]
+
+[tool.hatch.build.targets.sdist]
+include = ["chemdrawmcp", "README.md", "pyproject.toml", "install.py", "tests", "docs"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["live: needs a running ChemDraw (not run by default)"]
+addopts = "-m 'not live'"
+
+[tool.ruff]
+line-length = 130
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+# Lenient baseline so CI passes on the current code; tighten as the owners clean up.
+# E501 (66 lines > 130 chars, up to 184) and I001 (unsorted imports, auto-fixable with
+# `ruff check --fix`) are ignored globally. The remaining rules are suppressed per file below.
+ignore = ["E501", "I001"]
+
+[tool.ruff.lint.per-file-ignores]
+# F401 unused import, F841 unused local variable, E741 ambiguous variable name (`l`, `I`, `O`).
+"chemdrawmcp/backends/windows.py" = ["E741", "F401"]
+"chemdrawmcp/chem.py" = ["F841"]
+"chemdrawmcp/imageanalysis.py" = ["F401", "F841"]
+"chemdrawmcp/layout.py" = ["F401"]
+"chemdrawmcp/server.py" = ["E741", "F401"]
+"tests/test_windows_backend.py" = ["F401"]
