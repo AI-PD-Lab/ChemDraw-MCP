@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' http://127.0.0.1:* http://localhost:*; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'">
+  <title>Agent Chat for ChemDraw</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <header id="header">
+      <span class="star" aria-hidden="true">✻</span>
+      <span class="title">Agent Chat for ChemDraw</span>
+      <button id="bridge" type="button" title="Agent bridge status (click for details)">
+        <span id="bridge-dot" class="dot" aria-hidden="true"></span>
+        <span id="bridge-text">connecting…</span>
+      </button>
+      <span class="spacer"></span>
+      <button id="btn-close" type="button" class="ghost hidden" title="Close this panel" aria-label="Close">×</button>
+    </header>
+
+    <div id="bridge-help" class="hidden" role="status"></div>
+
+    <main id="transcript" role="log" aria-live="polite" aria-label="Conversation"></main>
+
+    <div id="status" class="hidden" aria-live="polite"></div>
+
+    <div id="suggest" class="hidden" role="listbox" aria-label="Slash commands"></div>
+
+    <div id="input-row">
+      <span class="caret" aria-hidden="true">&gt;</span>
+      <textarea id="prompt" rows="2" autocomplete="off" autocapitalize="off" spellcheck="false"
+        aria-label="Message to the agent"
+        placeholder='Try "draw the Suzuki coupling of 4-bromotoluene and phenylboronic acid" or "name the selected structure"   (/ for commands)'></textarea>
+    </div>
+
+    <footer id="footer">
+      <span class="dim">/help · /model</span>
+      <span id="sel-chip" class="dim hidden" title="Current ChemDraw selection; a non-empty selection is attached to each prompt">no selection</span>
+      <span class="spacer"></span>
+      <span id="version" class="dim"></span>
+      <button id="model-btn" type="button" title="Provider, model and effort (like /model in Claude Code)">claude · default ▾</button>
+    </footer>
+
+    <div id="chooser" class="hidden" role="dialog" aria-label="Provider, model and effort"></div>
+  </div>
+
+  <!-- config.js is written by the installer (python3 install.py --addin); missing = port 47325, no token -->
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

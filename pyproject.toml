@@ -24,6 +24,7 @@ Issues = "https://github.com/Jetzu/ChemDraw-MCP/issues"
 [project.scripts]
 chemdraw-mcp = "chemdrawmcp.server:main"
 chemdrawmcp-install = "chemdrawmcp.install:main"
+chemdraw-agent-bridge = "chemdrawmcp.bridge.server:main"
 
 [build-system]
 requires = ["hatchling"]

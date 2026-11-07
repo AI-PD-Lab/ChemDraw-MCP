@@ -154,9 +154,13 @@ function main() {
     try { text = el.staticTexts.value().filter(t => t); } catch (e) {}
     try { buttons = el.buttons.name(); } catch (e) {}
     const entry = {where: where, text: text, buttons: buttons};
-    if (dismiss && buttons.length) {
-      let chosen = null;
-      for (const b of pref) { if (buttons.indexOf(b) >= 0) { chosen = b; break; } }
+    // only alerts: sheets, or dialogs with an OK/Cancel-style button.  Add-in panels and palettes are windows
+    // without such buttons and must be left alone.
+    let chosen = null;
+    for (const b of pref) { if (buttons.indexOf(b) >= 0) { chosen = b; break; } }
+    const isAlert = where.startsWith("sheet") ? (buttons.length > 0) : (chosen !== null);
+    if (!isAlert) return;
+    if (dismiss) {
       if (!chosen) chosen = buttons[0];
       try { el.buttons.byName(chosen).click(); entry.clicked = chosen; } catch (e) { entry.clickError = String(e); }
     }

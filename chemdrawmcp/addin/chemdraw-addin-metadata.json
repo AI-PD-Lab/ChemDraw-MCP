@@ -1,0 +1,10 @@
+{
+  "name": "Agent Chat",
+  "description": "Chat with Claude Code or Codex about the open ChemDraw document. Talks to the local chemdrawmcp agent bridge (python3 install.py --addin).",
+  "version": "0.1.0",
+  "menuItemText": "Agent Chat",
+  "minimumAPIVersion": "1.0",
+  "url": "main.html",
+  "isModalDialog": false,
+  "canBeUninstalled": true
+}
