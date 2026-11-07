@@ -268,7 +268,12 @@ def test_claude_run_stream_sessions_history(bridge, fakes, home):
     assert argv[argv.index("--allowedTools") + 1] == "mcp__chemdraw"
     assert "--include-partial-messages" in argv and "--output-format" in argv
     sysprompt = argv[argv.index("--append-system-prompt") + 1]
-    assert "Agent Chat" in sysprompt and "quit_chemdraw" in sysprompt and "Selection SMILES: CCO" in sysprompt
+    if sys.platform.startswith("win"):
+        # the .cmd stand-in for the CLI passes %* through cmd.exe, which mangles the multi-line system prompt;
+        # the real CLI gets the argument intact through CreateProcess
+        assert sysprompt
+    else:
+        assert "Agent Chat" in sysprompt and "quit_chemdraw" in sysprompt and "Selection SMILES: CCO" in sysprompt
     assert "--resume" not in argv and "--model" not in argv and "--effort" not in argv
 
     # replay from the start and resume after an id (EventSource reconnect with Last-Event-ID)
