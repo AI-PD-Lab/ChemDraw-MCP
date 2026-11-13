@@ -106,7 +106,7 @@ ChemDraw stays in the background: the server never takes your keyboard focus or 
 ## Install
 
 ```bash
-git clone git@github.com:Jetzu/ChemDraw-MCP.git chemdraw-mcp && cd chemdraw-mcp
+git clone git@github.com:AI-PD-Lab/ChemDraw-MCP.git chemdraw-mcp && cd chemdraw-mcp
 python3 install.py
 ```
 
