@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE CDXML SYSTEM "http://www.cambridgesoft.com/xml/cdxml.dtd" >
+<CDXML CreationProgram="chemdrawmcp" Name="mechanism"
+ BoundingBox="33.54 19.18 457.09 125.21"
+ WindowPosition="0 0" WindowSize="0 0"
+ FractionalWidths="yes"
+ InterpretChemically="yes" ShowAtomQuery="yes" ShowAtomStereo="no" ShowAtomEnhancedStereo="yes"
+ ShowAtomNumber="no" ShowResidueID="no" ShowBondQuery="yes" ShowBondRxn="yes" ShowBondStereo="no"
+ ShowTerminalCarbonLabels="no" ShowNonTerminalCarbonLabels="no" HideImplicitHydrogens="no"
+ LabelFont="3" LabelSize="10" LabelFace="96"
+ CaptionFont="3" CaptionSize="10" CaptionFace="0"
+ HashSpacing="2.5" MarginWidth="1.6" LineWidth="0.6" BoldWidth="2" BondLength="14.4" BondSpacing="18" ChainAngle="120"
+ LabelJustification="Auto" CaptionJustification="Left"
+ AminoAcidTermini="HOH" ShowSequenceTermini="yes" ShowSequenceBonds="yes" ResidueWrapCount="40" ResidueBlockCount="10"
+ PrintMargins="36 36 36 36"
+ color="0" bgcolor="1"
+ RxnAutonumberStart="1" RxnAutonumberConditions="no" RxnAutonumberStyle="Roman" RxnAutonumberFormat="(#)">
+<colortable>
+<color r="1" g="1" b="1"/>
+<color r="0" g="0" b="0"/>
+<color r="1" g="0" b="0"/>
+<color r="1" g="1" b="0"/>
+<color r="0" g="1" b="0"/>
+<color r="0" g="1" b="1"/>
+<color r="0" g="0" b="1"/>
+<color r="1" g="0" b="1"/>
+</colortable>
+<fonttable>
+<font id="3" charset="iso-8859-1" name="Arial"/>
+</fonttable>
+<page id="56" BoundingBox="0 0 540 720" Width="540" Height="720" HeaderPosition="36" FooterPosition="36" PageOverlap="0" PrintTrimMarks="yes" HeightPages="1" WidthPages="1" DrawingSpace="poster">
+<t id="1" p="36 29.08" BoundingBox="36 19.18 146.65 31.83" Z="2" Justification="Left" LineHeight="auto"><s font="3" size="11" face="1">Cyanohydrin formation</s></t>
+<fragment id="2" BoundingBox="36 79.05 61.82 90.25" Z="3"><n id="3" p="55.61 84.65" NumHydrogens="0" Charge="-1"><t p="55.61 88.15" Justification="Center"><s font="3" size="10" face="96">C-</s></t></n><n id="4" p="41.21 84.65" Element="7" NumHydrogens="0"><t p="41.21 88.15" Justification="Center"><s font="3" size="10" face="96">N</s></t></n><b id="5" B="3" E="4" Order="3"/></fragment>
+<t id="6" p="73.96 88.18" BoundingBox="70.46 77.38 77.47 91.18" Z="4" Justification="Center" LineHeight="auto" InterpretChemically="no"><s font="3" size="12" face="0">+</s></t>
+<fragment id="7" BoundingBox="86.11 68.51 121.13 100.79" Z="5"><n id="8" p="116.09 95.75"/><n id="9" p="103.64 88.51"/><n id="10" p="91.15 95.66"/><n id="11" p="103.7 74.11" Element="8" NumHydrogens="0"/><b id="12" B="8" E="9"/><b id="13" B="9" E="10"/><b id="14" B="9" E="11" Order="2"/></fragment>
+<arrow id="15" Z="6" BoundingBox="56.35 52.64 99.73 96.02" FillType="None" ArrowheadType="Solid" HeadSize="1000" ArrowheadCenterSize="875" ArrowheadWidth="250" AngularSize="97.2" Head3D="95.03 87.82 0" Tail3D="62.53 89.49 0" Center3D="78.04 74.33 0" MajorAxisEnd3D="99.73 74.33 0" MinorAxisEnd3D="78.04 96.02 0" ArrowheadHead="Full"/>
+<arrow id="16" Z="7" BoundingBox="95.87 67.63 111.44 83.19" FillType="None" ArrowheadType="Solid" HeadSize="1000" ArrowheadCenterSize="875" ArrowheadWidth="250" AngularSize="135.03" Head3D="104.27 67.65 0" Tail3D="108.71 81.33 0" Center3D="103.66 75.41 0" MajorAxisEnd3D="111.44 75.41 0" MinorAxisEnd3D="103.66 83.19 0" ArrowheadHead="Full"/>
+<t id="17" p="78.56 114.83" BoundingBox="33.54 105.83 123.58 117.33" Z="8" Justification="Center" LineHeight="auto"><s font="3" size="10" face="0">nucleophilic addition</s></t>
+<arrow id="18" Z="9" BoundingBox="134.38 81.05 184.78 88.25" FillType="None" ArrowheadType="Solid" HeadSize="1000" ArrowheadCenterSize="875" ArrowheadWidth="250" Head3D="181.18 84.65 0" Tail3D="137.98 84.65 0" ArrowheadHead="Full"/>
+<fragment id="19" BoundingBox="195.58 60.63 235.2 108.67" Z="10"><n id="20" p="200.79 103.07" Element="7" NumHydrogens="0"/><n id="21" p="208.03 90.62"/><n id="22" p="215.26 78.16"/><n id="23" p="227.76 71"/><n id="24" p="208.1 65.67"/><n id="25" p="227.71 85.4" Element="8" NumHydrogens="0" Charge="-1"/><b id="26" B="20" E="21" Order="3"/><b id="27" B="21" E="22"/><b id="28" B="22" E="23"/><b id="29" B="22" E="24"/><b id="30" B="22" E="25"/></fragment>
+<t id="31" p="247.35 88.18" BoundingBox="243.84 77.38 250.85 91.18" Z="11" Justification="Center" LineHeight="auto" InterpretChemically="no"><s font="3" size="12" face="0">+</s></t>
+<fragment id="32" BoundingBox="259.49 78.05 291.62 91.25" Z="12"><n id="33" p="264.7 83.65" Element="1" NumHydrogens="0"/><n id="34" p="279.1 83.65" Element="8" NumHydrogens="2" Charge="1"><t p="279.1 87.15" Justification="Center"><s font="3" size="10" face="96">OH2+</s></t></n><b id="35" B="33" E="34"/></fragment>
+<arrow id="36" Z="13" BoundingBox="227.59 65.93 256.54 94.88" FillType="None" ArrowheadType="Solid" HeadSize="1000" ArrowheadCenterSize="875" ArrowheadWidth="250" AngularSize="114.32" Head3D="256.07 84.06 0" Tail3D="232.96 91.66 0" Center3D="242.06 80.4 0" MajorAxisEnd3D="256.54 80.4 0" MinorAxisEnd3D="242.06 94.88 0" ArrowheadHead="Full"/>
+<arrow id="37" Z="14" BoundingBox="266.76 72.68 286.51 92.43" FillType="None" ArrowheadType="Solid" HeadSize="1000" ArrowheadCenterSize="875" ArrowheadWidth="250" AngularSize="128.02" Head3D="279.1 92.11 0" Tail3D="267.58 78.61 0" Center3D="276.63 82.55 0" MajorAxisEnd3D="286.51 82.55 0" MinorAxisEnd3D="276.63 92.43 0" ArrowheadHead="Full"/>
+<t id="38" p="243.6 122.71" BoundingBox="211.09 113.71 276.12 125.21" Z="15" Justification="Center" LineHeight="auto"><s font="3" size="10" face="0">proton transfer</s></t>
+<arrow id="39" Z="16" BoundingBox="302.42 81.05 352.82 88.25" FillType="None" ArrowheadType="Solid" HeadSize="1000" ArrowheadCenterSize="875" ArrowheadWidth="250" Head3D="349.22 84.65 0" Tail3D="306.02 84.65 0" ArrowheadHead="Full"/>
+<fragment id="40" BoundingBox="363.62 65.59 411.26 103.71" Z="17"><n id="41" p="368.83 71.19" Element="7" NumHydrogens="0"/><n id="42" p="381.28 78.42"/><n id="43" p="393.73 85.66"/><n id="44" p="400.9 98.15"/><n id="45" p="406.22 78.49"/><n id="46" p="386.5 98.11" Element="8" NumHydrogens="1"/><b id="47" B="41" E="42" Order="3"/><b id="48" B="42" E="43"/><b id="49" B="43" E="44"/><b id="50" B="43" E="45"/><b id="51" B="43" E="46"/></fragment>
+<t id="52" p="423.41 88.18" BoundingBox="419.9 77.38 426.91 91.18" Z="18" Justification="Center" LineHeight="auto" InterpretChemically="no"><s font="3" size="12" face="0">+</s></t>
+<fragment id="53" BoundingBox="435.55 78.05 457.09 91.25" Z="19"><n id="54" p="446.32 83.65" Element="8" NumHydrogens="2"><t p="446.32 87.15" Justification="Center"><s font="3" size="10" face="96">OH2</s></t></n></fragment>
+<t id="55" p="410.35 117.75" BoundingBox="364.22 108.75 456.49 120.25" Z="20" Justification="Center" LineHeight="auto"><s font="3" size="10" face="0">acetone cyanohydrin</s></t>
+<scheme id="59"><step id="57" ReactionStepReactants="2 7" ReactionStepProducts="19 32" ReactionStepArrows="18" ReactionStepPlusses="6 31"/><step id="58" ReactionStepReactants="19 32" ReactionStepProducts="40 53" ReactionStepArrows="39" ReactionStepPlusses="31 52"/></scheme>
+</page>
+</CDXML>

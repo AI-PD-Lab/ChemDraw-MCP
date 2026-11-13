@@ -1,190 +1,138 @@
-# chemdraw-mcp — ChemDraw for Claude Code, Codex and any MCP client
+<div align="center">
 
-An [MCP](https://modelcontextprotocol.io) server that gives AI agents full access to **ChemDraw** (Revvity Signals,
-formerly PerkinElmer/CambridgeSoft): drawing structures, reactions and multi-step schemes in journal styles,
-rendering to PNG/SVG/PDF/EPS/TIFF, Name⇄Structure, chemical properties, format conversion, NMR prediction,
-clean-up, and every one of ChemDraw's ~1600 named commands and menu items.
+# chemdraw-mcp
 
-Two engines work together:
+**Let Claude Code, Codex and any MCP client draw in ChemDraw.**
 
-* **The live ChemDraw application** — on macOS through its AppleScript dictionary (driven with JXA), on Windows
-  through COM automation (best effort, see below).  ChemDraw does the rendering, naming, properties and conversions,
-  so the output is exactly what the user's lab expects.
-* **A headless CDXML engine** — RDKit plus our own CDXML writer/reader lays out molecules, reactions (reagents above
-  the arrow, conditions below, plus signs, yields, labels, atom mapping) and wrapped multi-step schemes using the
-  exact settings of ChemDraw's stationery styles (ACS 1996, Nature, RSC, Wiley, Science of Synthesis, ...).  The
-  CDXML is opened in ChemDraw (or pasted into an open document) and still works without ChemDraw (Linux, CI).
+Structures, reactions, multi-step schemes and electron-pushing mechanisms in journal styles, rendered by the real
+ChemDraw. Plus names, properties, NMR prediction and format conversion.
 
-Every render comes back with a numerical description (size, coverage, bounding box, margins, dominant colours) and a
-thumbnail the agent can look at.  `read_document` turns any open document back into SMILES / formulas / captions /
-reaction SMILES so the agent knows what is on the page before editing it.
+[![CI](https://github.com/Jetzu/ChemDraw-MCP/actions/workflows/ci.yml/badge.svg)](https://github.com/Jetzu/ChemDraw-MCP/actions/workflows/ci.yml)
+![python](https://img.shields.io/badge/python-3.10%2B-blue)
+![platform](https://img.shields.io/badge/ChemDraw-macOS%20%C2%B7%20Windows%20(experimental)-lightgrey)
+![tools](https://img.shields.io/badge/MCP%20tools-43-brightgreen)
+[![license](https://img.shields.io/badge/license-PolyForm%20Noncommercial-blue)](LICENSE)
 
-## Documentation
+</div>
 
-* [docs/tools.md](docs/tools.md) — reference for all 43 tools: parameters, return keys, example calls, pitfalls
-* [docs/agent-guide.md](docs/agent-guide.md) — how an agent should sequence the tools; styles, reaction syntax, verification, error handling, example prompts
-* [docs/architecture.md](docs/architecture.md) — the two engines, data flow, CDXML conventions, macOS/Windows automation, environment variables, file locations
-* [docs/windows.md](docs/windows.md) — getting the Windows COM backend working and fixing its tables
-* [docs/development.md](docs/development.md) — layout, tests, adding tools, regenerating `styles.py`, conventions
+```text
+> Draw the SN2 mechanism of hydroxide attacking chloromethane with curved arrows.
+```
+
+<p align="center"><img src="docs/images/sn2.png" width="640" alt="SN2 mechanism drawn by ChemDraw with curved electron-pushing arrows"></p>
+
+Every figure in this README was drawn by an agent through this server and exported by ChemDraw 23.
+The `.cdxml` source of each one is in [docs/images/cdxml](docs/images/cdxml), so you can open and edit it in ChemDraw.
+
+## Gallery
+
+### Reaction mechanisms
+
+> *"Show the mechanism of cyanohydrin formation from acetone and cyanide, with curved arrows for each step."*
+
+`draw_mechanism` takes stages and electron-pushing arrows (lone pair to new bond, bond to atom, fishhooks) and lays
+them out with reaction arrows between the stages.
+
+<p align="center"><img src="docs/images/cyanohydrin.png" width="820" alt="Cyanohydrin formation mechanism"></p>
+
+### Reactions
+
+> *"Draw the Fischer esterification of acetic acid with ethanol, H2SO4 (cat.) above the arrow, reflux 4 h below,
+> equilibrium arrow, 85% yield under the ester."*
+
+<p align="center"><img src="docs/images/esterification.png" width="640" alt="Fischer esterification"></p>
+
+> *"Suzuki coupling of 4-bromoanisole with phenylboronic acid: predict the product and draw it with the usual conditions."*
+
+100 named-reaction templates (Suzuki, Grignard, Wittig, amide coupling, Diels-Alder, ...) predict the product with RDKit
+and draw the reaction with typical reagents and conditions.
+
+<p align="center"><img src="docs/images/suzuki.png" width="640" alt="Suzuki coupling"></p>
+
+### Multi-step schemes
+
+> *"Lay out the BHC synthesis of ibuprofen from isobutylbenzene as a scheme: Ac2O/HF, then H2/Raney Ni, then CO/Pd."*
+
+<p align="center"><img src="docs/images/ibuprofen.png" width="820" alt="BHC ibuprofen synthesis scheme"></p>
+
+### Retrosynthesis
+
+> *"Show a retrosynthetic disconnection of paracetamol into 4-aminophenol and acetic anhydride."*
+
+<p align="center"><img src="docs/images/retro.png" width="640" alt="Retrosynthesis of paracetamol"></p>
+
+### Structures and names
+
+> *"Draw aspirin, ibuprofen, testosterone, caffeine, naproxen and sildenafil in a 3-column grid and label them."*
+
+Chemical names are resolved offline (a built-in dictionary of about 3,100 reagents, drugs, sugars and natural
+products), then by OPSIN and ChemDraw's own Name=Struct.
+
+<p align="center"><img src="docs/images/drugs.png" width="560" alt="Six drug structures in a grid"></p>
+
+### Journal styles
+
+> *"Draw the Henry condensation of benzaldehyde and nitromethane in Nature style."*
+
+Nineteen styles from ChemDraw's stationery: `acs`, `nature`, `rsc`, `wiley`, `science_of_synthesis`, and more.
+
+<p align="center"><img src="docs/images/styles_nature.png" width="640" alt="Reaction in Nature style"></p>
+
+### NMR prediction
+
+> *"Predict the 1H NMR spectrum of ethyl acetate."*
+
+<p align="center"><img src="docs/images/nmr.png" width="560" alt="Predicted 1H NMR spectrum of ethyl acetate"></p>
+
+More prompts to copy: [examples/prompts.md](examples/prompts.md) (24 of them, with the tools each one uses).
+
+## What it can do
+
+| | |
+|---|---|
+| **Draw** | structures, reactions, schemes, retrosyntheses, mechanisms; reagents, conditions, yields, atom mapping |
+| **Look** | render to PNG / SVG / PDF / EPS / TIFF with a numerical description, screenshots, read a document back as SMILES |
+| **Chemistry** | name to structure and back, formula / MW / logP / TPSA / elemental analysis, reaction balance, 1H / 13C NMR |
+| **Convert** | SMILES, InChI, MOL / SDF / RXN (V2000 and V3000), CDXML, CDX, CML, images; read `.cdx` files without ChemDraw |
+| **Control** | any of ChemDraw's ~1,600 named commands and menu items, selection, document settings |
+| **Headless** | without ChemDraw (Linux, CI) the same tools write CDXML and render with RDKit |
+
+ChemDraw stays in the background: the server never takes your keyboard focus or pops windows to the front.
 
 ## Install
 
 ```bash
-git clone git@github.com:Jetzu/ChemDraw-MCP.git chemdraw-mcp && cd chemdraw-mcp   # or https://github.com/Jetzu/ChemDraw-MCP.git
-python3 install.py           # creates .venv, installs the package (+ rdkit), registers the `chemdraw` server with
-                             # Claude Code, Codex CLI and Claude Desktop (if present)
-python3 install.py --check   # only report what was found (ChemDraw app, version, rdkit, config paths)
-python3 install.py --help    # individual steps: --claude --codex --claude-desktop, --uninstall, --dry-run
+git clone git@github.com:Jetzu/ChemDraw-MCP.git chemdraw-mcp && cd chemdraw-mcp
+python3 install.py
 ```
 
-| step | effect |
-|------|--------|
-| Claude Code | adds `chemdraw` to `~/.claude.json` (user scope). Run `/mcp` in Claude Code to check. |
-| Codex CLI | adds `[mcp_servers.chemdraw]` to `~/.codex/config.toml` (`codex mcp list`). |
-| Claude Desktop | adds the server to `claude_desktop_config.json` if that file exists. |
+This creates a virtual environment, installs the package and registers the `chemdraw` server with Claude Code,
+Codex CLI and Claude Desktop (whichever are present). Then ask your agent to draw something.
+Check with `python3 install.py --check`; run `/mcp` in Claude Code or `codex mcp list` to see it registered.
 
-Config files are backed up as `*.chemdrawmcp-backup`.  Manual registration for any MCP client: command
-`<repo>/.venv/bin/chemdraw-mcp` (`.venv\Scripts\chemdraw-mcp.exe` on Windows), stdio transport, no arguments.
-
-ChemDraw is found in `/Applications/ChemDraw*.app` (newest version) or via `CHEMDRAW_APP` / `CHEMDRAW_EXE`.
-Python ≥ 3.10.  macOS: the first automation call asks for permission to control ChemDraw and System Events
-(Automation / Accessibility) — grant it to your terminal or IDE.  `screenshot` also needs Screen Recording.
-
-## Using it
-
-```
-> draw the Fischer esterification of acetic acid with ethanol, H2SO4 cat., reflux, in ACS style
-⏺ chemdraw/draw_reaction({"reaction": "acetic acid + ethanol --[H2SO4 (cat.)]--> ethyl acetate + water",
-                          "conditions_below": ["reflux, 4 h"], "product_labels": ["85%", null]})
-  ⎿ {"document": "reaction_20251107_152210_417_01.cdxml", "window_id": 812, "render": {"path": ".../reaction_....png", ...
-> name it and give me logP and TPSA
-⏺ chemdraw/structure_to_name({"structure": "CC(=O)OCC"})       ⎿ {"name": "ethyl acetate", ...}
-⏺ chemdraw/properties({"structure": "CC(=O)OCC"})              ⎿ {"rdkit": {"formula": "C4H8O2", "logp": 0.56, ...
-```
-
-Typical agent flow: `status` → `draw_*` / `insert` → `read_document` → `render` / `screenshot` → `save_document`.
-
-### Tools
-
-| tool | purpose |
-|------|---------|
-| `status`, `launch`, `quit_chemdraw`, `activate_chemdraw` | discover / start ChemDraw; open documents; pending dialogs |
-| *Agent Chat add-in* + `chemdraw-agent-bridge` | Claude / Codex chat panel inside ChemDraw (see below) |
-| `documents`, `new_document(style)`, `open_document`, `close_document`, `save_document(path, format)` | document lifecycle; export to cdxml, cdx, mol / sdf / rxn (V2000) and molv3000 / sdfv3000 / rxnv3000, rdf, cml, ct, png, svg, pdf, eps, tiff, gif, jpeg, bmp, 3mf |
-| `draw_structures(structures, labels, style, columns)` | grid of molecules from SMILES / InChI / molblock / CDXML / names |
-| `draw_reaction(reaction | reactants+products, reagents_above, conditions_below, arrow, labels)` | one reaction with reagents, conditions, yields, atom mapping; arrows: full, equilibrium, retrosynthetic, double, dashed, bold, nogo, hollow |
-| `draw_scheme(steps, title, max_width)` | multi-step synthesis, chained intermediates, wraps into rows |
-| `draw_mechanism(stages, title)` | mechanism stages with curved electron-pushing arrows (`lp:0->0-3`, `1=2->2`, `h:3->3-4`, `:1e` fishhooks) and reaction/resonance arrows between stages |
-| `named_reactions`, `apply_named_reaction(reaction, reactants)`, `suggest_reactions(reactants)` | library of 100 named-reaction templates (Suzuki, Grignard, Wittig, amide coupling, Boc, CuAAC, Diels–Alder, ...): browse, predict products and draw the atom-mapped reaction with typical reagents/conditions, or list what a set of reactants can do |
-| `insert(data, kind)` | paste SMILES / name / CDXML / MOL / InChI / HELM / peptide / DNA / RNA / text through ChemDraw's importers |
-| `add_caption`, `add_arrow` | extra text and arrows |
-| `render(document, format, width)`, `quick_render(input)`, `screenshot` | images + numerical analysis + thumbnail |
-| `read_document`, `read_file(path)` | molecules (SMILES, formula, MW, position), captions, arrows, reaction steps, settings — of an open document, or of a `.cdxml` / binary `.cdx` file on disk without opening it |
-| `name_to_structure`, `structure_to_name` | ChemDraw Name=Struct / Struct=Name; names are resolved in this order: a built-in offline dictionary of ~3,100 reagents, solvents, drugs, amino acids, sugars, cofactors and natural products (7,800 aliases), OPSIN if installed, ChemDraw's Name=Struct, and PubChem only with `CHEMDRAWMCP_ONLINE=1` |
-| `properties`, `analyze_reaction` | ChemDraw values (formula, MW, exact mass, elemental analysis) + RDKit (InChIKey, logP, TPSA, HBD/HBA, stereocentres, Lipinski, QED); reaction balance & atom economy |
-| `convert(data, to)` | any format → any format (text results inline, files on disk) |
-| `clean_structure`, `check_structure`, `predict_nmr(nucleus)` | ChemDraw clean-up, chemical warnings, 1H/13C NMR prediction (spectrum document + PNG) |
-| `selection`, `select` | what is selected (SMILES, formula, MW, text, bounds) / select all, none, next, previous, invert |
-| `commands(pattern)`, `run_command(command)` | ChemDraw's ~1600 named commands with descriptions and enabled state |
-| `menus`, `do_menu(menu, item)` | menu items by title |
-| `document_settings` | read/set bond length, line widths, fonts, sizes, magnification |
-| `dismiss_dialogs`, `styles`, `analyze_image`, `compare_renders` | utilities |
-
-Documents are addressed by name (window title) or window id; `None` means the front document.  ChemDraw renames
-untitled documents after their first edit, so tools return and accept the stable window id.
-
-### Styles
-
-The `style` argument of the drawing tools uses the settings of the stationery shipped with ChemDraw 23:
-`acs` (ACS Document 1996, default), `nature`, `rsc`, `rsc_1col`, `wiley`, `science_of_synthesis`, `j_het_chem`,
-`j_chin_chem_soc`, `j_mol_mod_1col`, `j_mol_mod_2col`, `helv_chim_acta`, `adv_synth_catal`, `phytomedicine`,
-`default`, `a4`, `slide`, `dark`, `idraw`, `terminal_carbons`.  `new_document(style)` opens the real stationery.
-
-### Environment variables
-
-| variable | meaning |
-|----------|---------|
-| `CHEMDRAW_APP` / `CHEMDRAW_EXE` | explicit ChemDraw application / executable |
-| `CHEMDRAWMCP_HOME` | state directory (default `~/.chemdrawmcp`) |
-| `CHEMDRAWMCP_OUTPUT_DIR` | where renders and CDXML files go (default `$CHEMDRAWMCP_HOME/renders`) |
-| `CHEMDRAWMCP_AUTOLAUNCH=0` | never start ChemDraw from a tool call |
-| `CHEMDRAWMCP_BACKEND=none` | force headless mode (CDXML + RDKit only) |
-| `CHEMDRAWMCP_STYLE` | default style (default `acs`) |
-| `CHEMDRAWMCP_ALLOW_ACTIVATE=1` | allow the backend to activate ChemDraw as a last resort (by default ChemDraw stays in the background and never takes keyboard focus) |
-| `CHEMDRAWMCP_ONLINE=1` | allow PubChem name lookups when the offline dictionary, OPSIN and ChemDraw fail |
-| `CHEMDRAWMCP_DEBUG=1` | log every JXA call and dialog poll with timings to stderr (macOS) |
-| `CHEMDRAWMCP_LIVE=1` | enable the live ChemDraw tests (`pytest tests/test_live_macos.py -m live`) |
-| `CHEMDRAWMCP_NO_FONTS=1`, `CHEMDRAWMCP_FONT_DIR` | force the heuristic text metrics / add a font directory for layout measurements |
-| `CHEMDRAWMCP_CDX_PAIRS`, `CHEMDRAWMCP_SAMPLES` | directories with CDX/CDXML pairs and ChemDraw sample drawings for the reader tests |
+Requirements: Python 3.10+ and ChemDraw (developed and tested with ChemDraw 23.1 on macOS). On macOS the first call asks permission
+to control ChemDraw and System Events (Automation / Accessibility); grant it to your terminal or IDE.
 
 ## Agent Chat inside ChemDraw
 
-Like the PyMOL / ChimeraX panels in mol-mcp, ChemDraw gets a Claude-Code-style chat window of its own: an add-in
-(**Add-ins ▸ Agent Chat**) that runs your installed Claude Code or Codex CLI through a small local bridge and streams
-the agent's text, every `⏺ chemdraw/…` tool call with a collapsed `⎿` result preview, an animated status line and the
-cost/tokens when a turn is done.  The agent uses the `chemdraw` MCP server, so it acts on the document you are looking
-at; the panel also attaches your current selection (as SMILES) to each prompt.
+A chat panel in ChemDraw itself (**Add-ins > Agent Chat**) that runs your Claude Code or Codex CLI, streams its tool
+calls and results, and attaches your current selection to each prompt. Start the bridge from **Scripts > Start Agent
+Bridge**, or run `chemdraw-agent-bridge`. `python3 install.py` installs the add-in; restart ChemDraw once.
+The bridge listens on `127.0.0.1` only and requires a per-install token. See [docs/agent-chat.md](docs/agent-chat.md).
 
-```
-python3 install.py            # on a Mac/PC with ChemDraw this also installs the add-in and a Scripts-menu starter
-                              # (add --launch-agent to keep the bridge running permanently via launchd)
-```
+## Documentation
 
-1. Restart ChemDraw once (add-ins are read at launch).
-2. **Scripts ▸ Start Agent Bridge** (or run `chemdraw-agent-bridge` in a terminal; `--check` shows which CLIs it found).
-3. **Add-ins ▸ Agent Chat**.  Enter sends, Shift+Enter newline, Esc interrupts, ↑/↓ recall prompts; `/model` picks
-   provider · model · effort, `/claude` and `/codex` switch, `/clear` starts a new conversation, `/stop`, `/help`.
+| | |
+|---|---|
+| [docs/detailed.md](docs/detailed.md) | full tool table, environment variables, how the engines work, development, limits |
+| [docs/tools.md](docs/tools.md) | reference for all 43 tools: parameters, return keys, examples |
+| [docs/agent-guide.md](docs/agent-guide.md) | how an agent should sequence the tools |
+| [docs/architecture.md](docs/architecture.md) | data flow, CDXML conventions, file locations |
+| [docs/agent-chat.md](docs/agent-chat.md) | the in-app chat panel and its bridge |
+| [docs/windows.md](docs/windows.md) | the Windows COM backend |
+| [examples/](examples) | runnable scripts, prompts, and `make_gallery.py` which regenerates the images above |
 
-The bridge listens on `127.0.0.1:47325` only (`CHEMDRAWMCP_BRIDGE_PORT`), requires a per-install token
-(`~/.chemdrawmcp/bridge_token`, baked into the add-in's `config.js`) and refuses requests from web origins, so other
-websites cannot drive it.  Conversations resume across panel reopenings (`~/.chemdrawmcp/agent_sessions.json`).
-CLI locations are found automatically (`CHEMDRAWMCP_CLAUDE_EXE` / `CHEMDRAWMCP_CODEX_EXE` override); the agent runs
-with `~/.chemdrawmcp/workspace` as its working directory (`CHEMDRAWMCP_BRIDGE_CWD`).  Details: `docs/agent-chat.md`.
+Windows support is experimental: the COM backend was written from the published object model and has not been run
+against a real ChemDraw on Windows yet. macOS is the tested platform.
 
-## How it works
-
-* **macOS**: ChemDraw's AppleScript dictionary exposes documents (atoms, bonds, molecules, captions, arrows, the
-  selection with SMILES / formula / MW / exact mass / elemental analysis, drawing settings), `open`, `save … as
-  <type>` for every export format, menus and ~1600 named commands (`do`).  Data goes in through the pasteboard
-  (`pasteAsSMILES`, `pasteAsCdxml`, `pasteAsStructureToName`, …) and out through `copyAsCdxml`/`copyAsSMILES`/…;
-  the pasteboard is driven through NSPasteboard and your clipboard (every item and flavour, not just text) is
-  snapshotted and restored inside the same script.  Modal alerts (e.g. "no reaction center found" when exporting
-  RXN) are polled for every 2 s while a call runs, detected through Accessibility, dismissed, and their text is
-  returned as the error.  Commands act on ChemDraw's front document window, which the backend reorders inside ChemDraw without
-  activating the app, so ChemDraw stays in the background and never takes your keyboard focus.
-* **Windows**: `chemdrawmcp/backends/windows.py` drives `ChemDraw.Application` through COM (pywin32 or comtypes)
-  and can use the ChemScript SDK that ChemDraw installs.  It was written from the published object model without a
-  Windows machine at hand — the candidate member names live in editable tables at the top of the file, and every
-  error says which one failed.  Install with `python install.py` (adds pywin32).  See [docs/windows.md](docs/windows.md).
-* **CDXML engine** (`chemdrawmcp/cdxml.py`, `layout.py`, `styles.py`): fragments from RDKit molecules (Kekulé bonds,
-  wedges, charges, isotopes, radicals, atom maps), text with ChemDraw's formula face (automatic subscripts), straight
-  and curved arrows of all kinds, plus signs, graphics, and `<scheme>/<step>` records so ChemDraw and the reader know
-  what reacts to what.  Pages tile automatically so ChemDraw never asks to "expand the document".
-* **Headless**: without ChemDraw, `draw_*` write CDXML and render with RDKit; `properties`, `convert`,
-  `analyze_reaction`, `name_to_structure`, `named_reactions` / `apply_named_reaction` / `suggest_reactions` (100 reaction templates), `draw_mechanism` and
-  `read_file` (own binary CDX reader) use RDKit and the offline name dictionary.
-
-## Development
-
-```bash
-.venv/bin/python -m pytest -q          # ~2,070 unit tests, no ChemDraw needed (cdxml, cdx, layout, chem, names, reactions,
-                                       # mechanism, server, installer, macOS + Windows backends against fakes)
-CHEMDRAWMCP_LIVE=1 .venv/bin/python -m pytest tests/test_live_macos.py -m live -v   # 31 live tests against the real ChemDraw (macOS)
-```
-
-Layout: `chemdrawmcp/server.py` (tools), `backends/{base,macos,windows}.py`, `cdxml.py`, `cdx.py` (binary CDX reader),
-`layout.py`, `textmetrics.py`, `abbreviations.py`, `mechanism.py` (electron-pushing arrows), `reactions.py` (named-reaction
-templates), `styles.py`, `chem.py` (RDKit),
-`imageanalysis.py`, `colornames.py`, `discovery.py`, `mcpcompat.py`, `install.py`.  Details, test fixtures and how to add a tool:
-[docs/development.md](docs/development.md).
-
-## Notes and limits
-
-* ChemDraw's PNG export is always 300 dpi; `render(width=...)` resamples.  SVG/PDF/EPS are vector.
-* Pasting into an existing document lets ChemDraw choose the position (the pasted objects stay selected so the user
-  can move them); new documents get full layout control.
-* Struct=Name, NMR prediction and some import formats depend on your ChemDraw edition/licence.
-* ChemDraw is driven entirely in the background; only `activate_chemdraw` (or `CHEMDRAWMCP_ALLOW_ACTIVATE=1`) brings
-  it forward.  Keep it that way while the live tests run: ChemDraw hotkeys relabel selected atoms if it ever has focus.
-
-PolyForm Noncommercial licence.  ChemDraw is a trademark of Revvity Signals Software, Inc.; this project is not affiliated with it.
+Licensed under the [PolyForm Noncommercial License 1.0.0](LICENSE): free for noncommercial use, commercial use needs a separate licence from the author. ChemDraw is a trademark of Revvity Signals Software, Inc.; this project is not affiliated with it.

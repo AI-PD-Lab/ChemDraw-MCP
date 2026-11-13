@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE CDXML SYSTEM "http://www.cambridgesoft.com/xml/cdxml.dtd" >
+<CDXML CreationProgram="chemdrawmcp" Name="reaction"
+ BoundingBox="36 49.33 265.45 94.67"
+ WindowPosition="0 0" WindowSize="0 0"
+ FractionalWidths="yes"
+ InterpretChemically="yes" ShowAtomQuery="yes" ShowAtomStereo="no" ShowAtomEnhancedStereo="yes"
+ ShowAtomNumber="no" ShowResidueID="no" ShowBondQuery="yes" ShowBondRxn="yes" ShowBondStereo="no"
+ ShowTerminalCarbonLabels="no" ShowNonTerminalCarbonLabels="no" HideImplicitHydrogens="no"
+ LabelFont="3" LabelSize="6" LabelFace="96"
+ CaptionFont="3" CaptionSize="6" CaptionFace="96"
+ HashSpacing="1.7" MarginWidth="1.19" LineWidth="0.6" BoldWidth="1.56" BondLength="10.8" BondSpacing="18" ChainAngle="120"
+ LabelJustification="Auto" CaptionJustification="Left"
+ AminoAcidTermini="HOH" ShowSequenceTermini="yes" ShowSequenceBonds="yes" ResidueWrapCount="40" ResidueBlockCount="10"
+ PrintMargins="50.88 55.84 50.88 55.84"
+ color="0" bgcolor="1"
+ RxnAutonumberStart="1" RxnAutonumberConditions="no" RxnAutonumberStyle="Roman" RxnAutonumberFormat="(#)">
+<colortable>
+<color r="1" g="1" b="1"/>
+<color r="0" g="0" b="0"/>
+<color r="0.07" g="0.07" b="0.07"/>
+<color r="0.73" g="0.05" b="0.13"/>
+<color r="0.96" g="0.75" b="0.37"/>
+<color r="0" g="0.44" b="0.2"/>
+<color r="0" g="0.45" b="0.54"/>
+<color r="0" g="0.16" b="0.35"/>
+<color r="0.35" g="0.3" b="0.51"/>
+<color r="0.4" g="0.4" b="1"/>
+<color r="0.8" g="0.9" b="1"/>
+<color r="0.93" g="0.87" b="0.93"/>
+<color r="1" g="0" b="1"/>
+<color r="0.24" g="0.53" b="0.4"/>
+<color r="0.75" g="0.75" b="0.75"/>
+<color r="0.92" g="0.92" b="0.92"/>
+<color r="0.5" g="0" b="0.5"/>
+</colortable>
+<fonttable>
+<font id="3" charset="iso-8859-1" name="Arial"/>
+</fonttable>
+<page id="56" BoundingBox="0 0 510.24 680.31" Width="510.24" Height="680.31" HeaderPosition="36" FooterPosition="36" PageOverlap="0" PrintTrimMarks="yes" HeightPages="1" WidthPages="1" DrawingSpace="poster">
+<fragment id="1" BoundingBox="36 49.33 62.33 94.67" Z="2"><n id="2" p="58.55 53.11" Element="8" NumHydrogens="0"/><n id="3" p="49.19 58.49"/><n id="4" p="49.17 69.29"/><n id="5" p="39.8 74.67"/><n id="6" p="39.78 85.47"/><n id="7" p="49.12 90.89"/><n id="8" p="58.49 85.51"/><n id="9" p="58.51 74.71"/><b id="10" B="2" E="3" Order="2"/><b id="11" B="3" E="4"/><b id="12" B="4" E="5" Order="2"/><b id="13" B="5" E="6"/><b id="14" B="6" E="7" Order="2"/><b id="15" B="7" E="8"/><b id="16" B="8" E="9" Order="2"/><b id="17" B="9" E="4"/></fragment>
+<t id="18" p="71.15 74.36" BoundingBox="68.81 67.16 73.48 76.36" Z="3" Justification="Center" LineHeight="auto" InterpretChemically="no"><s font="3" size="8" face="0">+</s></t>
+<fragment id="19" BoundingBox="79.96 60.1 107.17 83.9" Z="4"><n id="20" p="83.74 80.05"/><n id="21" p="93.12 74.68" Element="7" NumHydrogens="0" Charge="1"/><n id="22" p="93.15 63.88" Element="8" NumHydrogens="0"/><n id="23" p="102.45 80.12" Element="8" NumHydrogens="0" Charge="-1"/><b id="24" B="20" E="21"/><b id="25" B="21" E="22" Order="2"/><b id="26" B="21" E="23"/></fragment>
+<arrow id="27" Z="5" BoundingBox="115.27 69.3 161.72 74.7" FillType="None" ArrowheadType="Solid" HeadSize="1000" ArrowheadCenterSize="875" ArrowheadWidth="250" Head3D="159.02 72 0" Tail3D="117.97 72 0" ArrowheadHead="Full"/>
+<t id="28" p="138.49 66.18" BoundingBox="130.16 60.78 146.83 67.68" Z="6" Justification="Center" LineHeight="auto"><s font="3" size="6" face="0">NaOH</s></t>
+<t id="29" p="138.49 81.72" BoundingBox="122.29 76.32 154.7 83.22" Z="7" Justification="Center" LineHeight="auto"><s font="3" size="6" face="0">MeOH, 0 °C</s></t>
+<fragment id="30" BoundingBox="169.82 51.95 234.44 92.05" Z="8"><n id="31" p="183.95 55.73" Element="8" NumHydrogens="0"/><n id="32" p="183.91 66.53" Element="7" NumHydrogens="0" Charge="1"/><n id="33" p="193.25 71.97"/><n id="34" p="202.62 66.6"/><n id="35" p="211.95 72.03"/><n id="36" p="221.32 66.67"/><n id="37" p="230.66 72.1"/><n id="38" p="230.62 82.9"/><n id="39" p="221.25 88.27"/><n id="40" p="211.91 82.83"/><n id="41" p="174.54 71.9" Element="8" NumHydrogens="0" Charge="-1"/><b id="42" B="31" E="32" Order="2"/><b id="43" B="32" E="33"/><b id="44" B="33" E="34" Order="2"/><b id="45" B="34" E="35"/><b id="46" B="35" E="36" Order="2"/><b id="47" B="36" E="37"/><b id="48" B="37" E="38" Order="2"/><b id="49" B="38" E="39"/><b id="50" B="39" E="40" Order="2"/><b id="51" B="32" E="41"/><b id="52" B="40" E="35"/></fragment>
+<t id="53" p="243.25 74.36" BoundingBox="240.92 67.16 245.59 76.36" Z="9" Justification="Center" LineHeight="auto" InterpretChemically="no"><s font="3" size="8" face="0">+</s></t>
+<fragment id="54" BoundingBox="252.07 67.72 265.45 76.29" Z="10"><n id="55" p="258.76 71.5" Element="8" NumHydrogens="2"><t p="258.76 73.59" Justification="Center"><s font="3" size="6" face="96">OH2</s></t></n></fragment>
+<scheme id="58"><step id="57" ReactionStepReactants="1 19" ReactionStepProducts="30 54" ReactionStepArrows="27" ReactionStepObjectsAboveArrow="28" ReactionStepObjectsBelowArrow="29" ReactionStepPlusses="18 53"/></scheme>
+</page>
+</CDXML>

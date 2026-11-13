@@ -33,6 +33,7 @@ On Windows use `.venv\Scripts\python.exe` and `set VAR=value` (or `$env:VAR = "v
 | `05_properties.py` | `chem.properties` (formula, MW, exact mass, InChIKey, logP, TPSA, HBD/HBA, Lipinski, QED), `chem.elemental_analysis`, `chem.describe`, and `chem.parse_reaction` + `reaction_properties` for balance, masses and atom economy, with a name resolved offline (`resolve_name("aspirin")`) |
 | `06_mcp_client.py` | an MCP stdio client (`mcp.client.stdio.stdio_client` + `ClientSession`): starts the server, lists its 43 tools, calls `status`, `draw_reaction(open_in_chemdraw=False)` and `properties`, and prints the JSON results (the image content block of the render is summarised) |
 | `07_custom_cdxml.py` | the low-level `CDXMLDocument` API: coloured fragments and atom colours, `add_plus`, `add_arrow`, a curved electron-pushing arrow (`add_curved_arrow`), captions with bold / italic / formula faces, `add_step`, a rounded-rectangle frame (`add_graphic`), all in ChemDraw's dark-mode style; every call is explained in a comment |
+| `make_gallery.py` | regenerates the README images in `docs/images/` with the real ChemDraw (needs ChemDraw; `python examples/make_gallery.py sn2 suzuki` for a subset) |
 
 Each `.cdxml` the examples write opens directly in ChemDraw (File > Open, or drag it onto the app); the
 exact settings of the stationery (bond length, fonts, line widths, page size) are in the file header.

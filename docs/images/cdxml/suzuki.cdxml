@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE CDXML SYSTEM "http://www.cambridgesoft.com/xml/cdxml.dtd" >
+<CDXML CreationProgram="chemdrawmcp" Name="suzuki_coupling"
+ BoundingBox="36 34.29 370.93 109.71"
+ WindowPosition="0 0" WindowSize="0 0"
+ FractionalWidths="yes"
+ InterpretChemically="yes" ShowAtomQuery="yes" ShowAtomStereo="no" ShowAtomEnhancedStereo="yes"
+ ShowAtomNumber="no" ShowResidueID="no" ShowBondQuery="yes" ShowBondRxn="yes" ShowBondStereo="no"
+ ShowTerminalCarbonLabels="no" ShowNonTerminalCarbonLabels="no" HideImplicitHydrogens="no"
+ LabelFont="3" LabelSize="10" LabelFace="96"
+ CaptionFont="3" CaptionSize="10" CaptionFace="0"
+ HashSpacing="2.5" MarginWidth="1.6" LineWidth="0.6" BoldWidth="2" BondLength="14.4" BondSpacing="18" ChainAngle="120"
+ LabelJustification="Auto" CaptionJustification="Left"
+ AminoAcidTermini="HOH" ShowSequenceTermini="yes" ShowSequenceBonds="yes" ResidueWrapCount="40" ResidueBlockCount="10"
+ PrintMargins="36 36 36 36"
+ color="0" bgcolor="1"
+ RxnAutonumberStart="1" RxnAutonumberConditions="no" RxnAutonumberStyle="Roman" RxnAutonumberFormat="(#)">
+<colortable>
+<color r="1" g="1" b="1"/>
+<color r="0" g="0" b="0"/>
+<color r="1" g="0" b="0"/>
+<color r="1" g="1" b="0"/>
+<color r="0" g="1" b="0"/>
+<color r="0" g="1" b="1"/>
+<color r="0" g="0" b="1"/>
+<color r="1" g="0" b="1"/>
+</colortable>
+<fonttable>
+<font id="3" charset="iso-8859-1" name="Arial"/>
+</fonttable>
+<page id="74" BoundingBox="0 0 540 720" Width="540" Height="720" HeaderPosition="36" FooterPosition="36" PageOverlap="0" PrintTrimMarks="yes" HeightPages="1" WidthPages="1" DrawingSpace="poster">
+<fragment id="1" BoundingBox="36 34.29 71.11 109.71" Z="2"><n id="2" p="66.07 104.67" AtomNumber="9"/><n id="3" p="53.58 97.49" Element="8" NumHydrogens="0" AtomNumber="8"/><n id="4" p="53.55 83.09" AtomNumber="7"/><n id="5" p="41.07 75.92" AtomNumber="5"/><n id="6" p="41.04 61.52" AtomNumber="3"/><n id="7" p="53.5 54.29" AtomNumber="1"/><n id="8" p="53.47 39.89" Element="35" NumHydrogens="0"/><n id="9" p="65.98 61.47" AtomNumber="4"/><n id="10" p="66.01 75.87" AtomNumber="6"/><b id="11" B="2" E="3"/><b id="12" B="3" E="4"/><b id="13" B="4" E="5" Order="2"/><b id="14" B="5" E="6"/><b id="15" B="6" E="7" Order="2"/><b id="16" B="7" E="8"/><b id="17" B="7" E="9"/><b id="18" B="9" E="10" Order="2"/><b id="19" B="10" E="4"/></fragment>
+<t id="20" p="83.25 75.53" BoundingBox="79.75 64.73 86.76 78.53" Z="3" Justification="Center" LineHeight="auto" InterpretChemically="no"><s font="3" size="12" face="0">+</s></t>
+<fragment id="21" BoundingBox="95.4 41.47 145.76 102.53" Z="4"><n id="22" p="108.11 96.88" Element="8" NumHydrogens="1"/><n id="23" p="120.59 89.71" Element="5" NumHydrogens="0"/><n id="24" p="133.05 96.93" Element="8" NumHydrogens="1"/><n id="25" p="120.62 75.31" AtomNumber="2"/><n id="26" p="133.1 68.13" AtomNumber="10"/><n id="27" p="133.13 53.73" AtomNumber="12"/><n id="28" p="120.68 46.51" AtomNumber="14"/><n id="29" p="108.19 53.68" AtomNumber="13"/><n id="30" p="108.16 68.08" AtomNumber="11"/><b id="31" B="22" E="23"/><b id="32" B="23" E="24"/><b id="33" B="23" E="25"/><b id="34" B="25" E="26" Order="2"/><b id="35" B="26" E="27"/><b id="36" B="27" E="28" Order="2"/><b id="37" B="28" E="29"/><b id="38" B="29" E="30" Order="2"/><b id="39" B="30" E="25"/></fragment>
+<arrow id="40" Z="5" BoundingBox="156.56 68.4 262.52 75.6" FillType="None" ArrowheadType="Solid" HeadSize="1000" ArrowheadCenterSize="875" ArrowheadWidth="250" Head3D="258.92 72 0" Tail3D="160.16 72 0" ArrowheadHead="Full"/>
+<t id="41" p="209.54 62.74" BoundingBox="195.37 53.74 223.71 66.24" Z="6" Justification="Center" LineHeight="auto"><s font="3" size="10" face="96">K2CO3</s></t>
+<t id="42" p="209.54 48.24" BoundingBox="165.92 39.24 253.16 51.74" Z="7" Justification="Center" LineHeight="auto"><s font="3" size="10" face="96">Pd(PPh3)4 (5 mol%)</s></t>
+<t id="43" p="209.54 86.76" BoundingBox="166.13 77.76 252.95 90.26" Z="8" Justification="Center" LineHeight="auto"><s font="3" size="10" face="96">dioxane/H2O, 80 °C</s></t>
+<fragment id="44" BoundingBox="273.32 41.68 370.93 102.32" Z="9"><n id="45" p="328.33 75.36" AtomNumber="1"/><n id="46" p="340.85 68.24" AtomNumber="2"/><n id="47" p="315.91 68.08" AtomNumber="3"/><n id="48" p="328.24 89.76" AtomNumber="4"/><n id="49" p="303.39 75.2" AtomNumber="5"/><n id="50" p="315.73 96.88" AtomNumber="6"/><n id="51" p="303.3 89.6" AtomNumber="7"/><n id="52" p="290.78 96.72" Element="8" NumHydrogens="0" AtomNumber="8"/><n id="53" p="278.36 89.44" AtomNumber="9"/><n id="54" p="353.28 75.52" AtomNumber="10"/><n id="55" p="340.94 53.84" AtomNumber="11"/><n id="56" p="365.79 68.4" AtomNumber="12"/><n id="57" p="353.46 46.72" AtomNumber="13"/><n id="58" p="365.89 54" AtomNumber="14"/><b id="59" B="45" E="46"/><b id="60" B="47" E="45" Order="2"/><b id="61" B="45" E="48"/><b id="62" B="49" E="47"/><b id="63" B="48" E="50" Order="2"/><b id="64" B="51" E="49" Order="2"/><b id="65" B="50" E="51"/><b id="66" B="52" E="51"/><b id="67" B="53" E="52"/><b id="68" B="46" E="54" Order="2"/><b id="69" B="55" E="46"/><b id="70" B="54" E="56"/><b id="71" B="57" E="55" Order="2"/><b id="72" B="56" E="58" Order="2"/><b id="73" B="58" E="57"/></fragment>
+<scheme id="76"><step id="75" ReactionStepReactants="1 21" ReactionStepProducts="44" ReactionStepArrows="40" ReactionStepObjectsAboveArrow="42 41" ReactionStepObjectsBelowArrow="43" ReactionStepPlusses="20" ReactionStepAtomMap="7 45 25 46 6 47 9 48 5 49 10 50 4 51 3 52 2 53 26 54 30 55 27 56 29 57 28 58"/></scheme>
+</page>
+</CDXML>

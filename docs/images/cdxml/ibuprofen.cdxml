@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE CDXML SYSTEM "http://www.cambridgesoft.com/xml/cdxml.dtd" >
+<CDXML CreationProgram="chemdrawmcp" Name="scheme"
+ BoundingBox="36 9.09 604.47 133.16"
+ WindowPosition="0 0" WindowSize="0 0"
+ FractionalWidths="yes"
+ InterpretChemically="yes" ShowAtomQuery="yes" ShowAtomStereo="no" ShowAtomEnhancedStereo="yes"
+ ShowAtomNumber="no" ShowResidueID="no" ShowBondQuery="yes" ShowBondRxn="yes" ShowBondStereo="no"
+ ShowTerminalCarbonLabels="no" ShowNonTerminalCarbonLabels="no" HideImplicitHydrogens="no"
+ LabelFont="3" LabelSize="10" LabelFace="96"
+ CaptionFont="3" CaptionSize="10" CaptionFace="0"
+ HashSpacing="2.5" MarginWidth="1.6" LineWidth="0.6" BoldWidth="2" BondLength="14.4" BondSpacing="18" ChainAngle="120"
+ LabelJustification="Auto" CaptionJustification="Left"
+ AminoAcidTermini="HOH" ShowSequenceTermini="yes" ShowSequenceBonds="yes" ResidueWrapCount="40" ResidueBlockCount="10"
+ PrintMargins="36 36 36 36"
+ color="0" bgcolor="1"
+ RxnAutonumberStart="1" RxnAutonumberConditions="no" RxnAutonumberStyle="Roman" RxnAutonumberFormat="(#)">
+<colortable>
+<color r="1" g="1" b="1"/>
+<color r="0" g="0" b="0"/>
+<color r="1" g="0" b="0"/>
+<color r="1" g="1" b="0"/>
+<color r="0" g="1" b="0"/>
+<color r="0" g="1" b="1"/>
+<color r="0" g="0" b="1"/>
+<color r="1" g="0" b="1"/>
+</colortable>
+<fonttable>
+<font id="3" charset="iso-8859-1" name="Arial"/>
+</fonttable>
+<page id="117" BoundingBox="0 0 1080 720" Width="1080" Height="720" HeaderPosition="36" FooterPosition="36" PageOverlap="0" PrintTrimMarks="yes" HeightPages="1" WidthPages="2" DrawingSpace="poster">
+<t id="1" p="36 18.99" BoundingBox="36 9.09 169.28 21.74" Z="2" Justification="Left" LineHeight="auto"><s font="3" size="11" face="1">BHC synthesis of ibuprofen</s></t>
+<fragment id="2" BoundingBox="36 72.32 108.41 111.38" Z="3"><n id="3" p="41.04 106.34"/><n id="4" p="53.48 99.1"/><n id="5" p="53.43 84.7"/><n id="6" p="65.98 106.25"/><n id="7" p="78.43 99.01"/><n id="8" p="90.93 106.16"/><n id="9" p="103.37 98.92"/><n id="10" p="103.32 84.52"/><n id="11" p="90.82 77.36"/><n id="12" p="78.38 84.61"/><b id="13" B="3" E="4"/><b id="14" B="4" E="5"/><b id="15" B="4" E="6"/><b id="16" B="6" E="7"/><b id="17" B="7" E="8" Order="2"/><b id="18" B="8" E="9"/><b id="19" B="9" E="10" Order="2"/><b id="20" B="10" E="11"/><b id="21" B="11" E="12" Order="2"/><b id="22" B="12" E="7"/></fragment>
+<arrow id="23" Z="4" BoundingBox="119.21 88.25 169.61 95.45" FillType="None" ArrowheadType="Solid" HeadSize="1000" ArrowheadCenterSize="875" ArrowheadWidth="250" Head3D="166.01 91.85 0" Tail3D="122.81 91.85 0" ArrowheadHead="Full"/>
+<t id="24" p="144.41 82.59" BoundingBox="133.01 73.59 155.8 86.09" Z="5" Justification="Center" LineHeight="auto"><s font="3" size="10" face="96">Ac2O</s></t>
+<t id="25" p="144.41 106.61" BoundingBox="137.74 97.61 151.07 109.11" Z="6" Justification="Center" LineHeight="auto"><s font="3" size="10" face="0">HF</s></t>
+<fragment id="26" BoundingBox="180.41 54.42 265.79 129.28" Z="7"><n id="27" p="198.35 124.24"/><n id="28" p="198.36 109.84"/><n id="29" p="185.9 102.62" Element="8" NumHydrogens="0"/><n id="30" p="210.84 102.64"/><n id="31" p="210.85 88.24"/><n id="32" p="223.33 81.06"/><n id="33" p="235.79 88.26"/><n id="34" p="248.27 81.07"/><n id="35" p="248.28 66.67"/><n id="36" p="260.75 59.48"/><n id="37" p="235.81 59.46"/><n id="38" p="235.78 102.66"/><n id="39" p="223.3 109.85"/><b id="40" B="27" E="28"/><b id="41" B="28" E="29" Order="2"/><b id="42" B="28" E="30"/><b id="43" B="30" E="31"/><b id="44" B="31" E="32" Order="2"/><b id="45" B="32" E="33"/><b id="46" B="33" E="34"/><b id="47" B="34" E="35"/><b id="48" B="35" E="36"/><b id="49" B="35" E="37"/><b id="50" B="33" E="38" Order="2"/><b id="51" B="38" E="39"/><b id="52" B="39" E="30" Order="2"/></fragment>
+<arrow id="53" Z="8" BoundingBox="276.59 88.25 336.43 95.45" FillType="None" ArrowheadType="Solid" HeadSize="1000" ArrowheadCenterSize="875" ArrowheadWidth="250" Head3D="332.83 91.85 0" Tail3D="280.19 91.85 0" ArrowheadHead="Full"/>
+<t id="54" p="306.51 82.59" BoundingBox="301.24 73.59 311.79 86.09" Z="9" Justification="Center" LineHeight="auto"><s font="3" size="10" face="96">H2</s></t>
+<t id="55" p="306.51 106.61" BoundingBox="285.95 97.61 327.07 109.11" Z="10" Justification="Center" LineHeight="auto"><s font="3" size="10" face="0">Raney Ni</s></t>
+<fragment id="56" BoundingBox="347.23 54.42 439.84 129.28" Z="11"><n id="57" p="372.4 59.46"/><n id="58" p="372.41 73.86"/><n id="59" p="359.94 81.08" Element="8" NumHydrogens="1"/><n id="60" p="384.89 81.06"/><n id="61" p="384.9 95.46"/><n id="62" p="397.37 102.64"/><n id="63" p="409.84 95.44"/><n id="64" p="422.31 102.63"/><n id="65" p="422.33 117.03"/><n id="66" p="434.8 124.22"/><n id="67" p="409.86 124.24"/><n id="68" p="409.83 81.04"/><n id="69" p="397.35 73.85"/><b id="70" B="57" E="58"/><b id="71" B="58" E="59"/><b id="72" B="58" E="60"/><b id="73" B="60" E="61"/><b id="74" B="61" E="62" Order="2"/><b id="75" B="62" E="63"/><b id="76" B="63" E="64"/><b id="77" B="64" E="65"/><b id="78" B="65" E="66"/><b id="79" B="65" E="67"/><b id="80" B="63" E="68" Order="2"/><b id="81" B="68" E="69"/><b id="82" B="69" E="60" Order="2"/></fragment>
+<arrow id="83" Z="12" BoundingBox="450.64 88.25 501.04 95.45" FillType="None" ArrowheadType="Solid" HeadSize="1000" ArrowheadCenterSize="875" ArrowheadWidth="250" Head3D="497.44 91.85 0" Tail3D="454.24 91.85 0" ArrowheadHead="Full"/>
+<t id="84" p="475.84 83.59" BoundingBox="468.34 74.59 483.34 86.09" Z="13" Justification="Center" LineHeight="auto"><s font="3" size="10" face="0">CO</s></t>
+<t id="85" p="475.84 106.61" BoundingBox="460.28 97.61 491.41 109.11" Z="14" Justification="Center" LineHeight="auto"><s font="3" size="10" face="0">Pd cat.</s></t>
+<fragment id="86" BoundingBox="511.84 50.54 604.47 133.16" Z="15"><n id="87" p="516.88 128.1"/><n id="88" p="529.36 120.91"/><n id="89" p="541.82 128.12"/><n id="90" p="529.37 106.51"/><n id="91" p="541.84 99.32"/><n id="92" p="554.31 106.53"/><n id="93" p="566.78 99.34"/><n id="94" p="566.8 84.94"/><n id="95" p="579.27 77.75"/><n id="96" p="591.74 84.96"/><n id="97" p="579.28 63.35"/><n id="98" p="566.82 56.14" Element="8" NumHydrogens="0"/><n id="99" p="591.76 56.16" Element="8" NumHydrogens="1"/><n id="100" p="554.33 77.73"/><n id="101" p="541.85 84.92"/><b id="102" B="87" E="88"/><b id="103" B="88" E="89"/><b id="104" B="88" E="90"/><b id="105" B="90" E="91"/><b id="106" B="91" E="92"/><b id="107" B="92" E="93" Order="2"/><b id="108" B="93" E="94"/><b id="109" B="94" E="95"/><b id="110" B="95" E="96"/><b id="111" B="95" E="97"/><b id="112" B="97" E="98" Order="2"/><b id="113" B="97" E="99"/><b id="114" B="94" E="100" Order="2"/><b id="115" B="100" E="101"/><b id="116" B="101" E="91" Order="2"/></fragment>
+<scheme id="121"><step id="118" ReactionStepReactants="2" ReactionStepProducts="26" ReactionStepArrows="23" ReactionStepObjectsAboveArrow="24" ReactionStepObjectsBelowArrow="25"/><step id="119" ReactionStepReactants="26" ReactionStepProducts="56" ReactionStepArrows="53" ReactionStepObjectsAboveArrow="54" ReactionStepObjectsBelowArrow="55"/><step id="120" ReactionStepReactants="56" ReactionStepProducts="86" ReactionStepArrows="83" ReactionStepObjectsAboveArrow="84" ReactionStepObjectsBelowArrow="85"/></scheme>
+</page>
+</CDXML>
