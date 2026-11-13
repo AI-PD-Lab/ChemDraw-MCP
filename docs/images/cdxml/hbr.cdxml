@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE CDXML SYSTEM "http://www.cambridgesoft.com/xml/cdxml.dtd" >
+<CDXML CreationProgram="chemdrawmcp" Name="mechanism"
+ BoundingBox="36 36.6 415.29 114.94"
+ WindowPosition="0 0" WindowSize="0 0"
+ FractionalWidths="yes"
+ InterpretChemically="yes" ShowAtomQuery="yes" ShowAtomStereo="no" ShowAtomEnhancedStereo="yes"
+ ShowAtomNumber="no" ShowResidueID="no" ShowBondQuery="yes" ShowBondRxn="yes" ShowBondStereo="no"
+ ShowTerminalCarbonLabels="no" ShowNonTerminalCarbonLabels="no" HideImplicitHydrogens="no"
+ LabelFont="3" LabelSize="10" LabelFace="96"
+ CaptionFont="3" CaptionSize="10" CaptionFace="0"
+ HashSpacing="2.5" MarginWidth="1.6" LineWidth="0.6" BoldWidth="2" BondLength="14.4" BondSpacing="18" ChainAngle="120"
+ LabelJustification="Auto" CaptionJustification="Left"
+ AminoAcidTermini="HOH" ShowSequenceTermini="yes" ShowSequenceBonds="yes" ResidueWrapCount="40" ResidueBlockCount="10"
+ PrintMargins="36 36 36 36"
+ color="0" bgcolor="1"
+ RxnAutonumberStart="1" RxnAutonumberConditions="no" RxnAutonumberStyle="Roman" RxnAutonumberFormat="(#)">
+<colortable>
+<color r="1" g="1" b="1"/>
+<color r="0" g="0" b="0"/>
+<color r="1" g="0" b="0"/>
+<color r="1" g="1" b="0"/>
+<color r="0" g="1" b="0"/>
+<color r="0" g="1" b="1"/>
+<color r="0" g="0" b="1"/>
+<color r="1" g="0" b="1"/>
+</colortable>
+<fonttable>
+<font id="3" charset="iso-8859-1" name="Arial"/>
+</fonttable>
+<page id="32" BoundingBox="0 0 540 720" Width="540" Height="720" HeaderPosition="36" FooterPosition="36" PageOverlap="0" PrintTrimMarks="yes" HeightPages="1" WidthPages="1" DrawingSpace="poster">
+<t id="1" p="36 46.5" BoundingBox="36 36.6 220.03 49.25" Z="2" Justification="Left" LineHeight="auto"><s font="3" size="11" face="1">Electrophilic addition of HBr to ethene</s></t>
+<fragment id="2" BoundingBox="36 78.05 81.93 91.25" Z="3"><n id="3" p="66.17 83.65" NumHydrogens="2"><t p="66.17 87.15" Justification="Center"><s font="3" size="10" face="96">CH2</s></t></n><n id="4" p="51.77 83.65" NumHydrogens="2"><t p="51.77 87.15" Justification="Center"><s font="3" size="10" face="96">CH2</s></t></n><b id="5" B="3" E="4" Order="2"/></fragment>
+<t id="6" p="94.08 88.18" BoundingBox="90.57 77.38 97.58 91.18" Z="4" Justification="Center" LineHeight="auto" InterpretChemically="no"><s font="3" size="12" face="0">+</s></t>
+<fragment id="7" BoundingBox="106.22 79.05 132.43 90.25" Z="5"><n id="8" p="111.43 84.65" Element="1" NumHydrogens="0"/><n id="9" p="125.83 84.65" Element="35" NumHydrogens="0"><t p="125.83 88.15" Justification="Center"><s font="3" size="10" face="96">Br</s></t></n><b id="10" B="8" E="9"/></fragment>
+<arrow id="11" Z="6" BoundingBox="47.78 73.27 110.01 135.5" FillType="None" ArrowheadType="Solid" HeadSize="1000" ArrowheadCenterSize="875" ArrowheadWidth="250" AngularSize="-90" Head3D="102.79 84.46 0" Tail3D="58.97 80.48 0" Center3D="78.89 104.38 0" MajorAxisEnd3D="110.01 104.38 0" MinorAxisEnd3D="78.89 135.5 0" ArrowheadHead="Full"/>
+<arrow id="12" Z="7" BoundingBox="118.22 76.08 134.03 91.89" FillType="None" ArrowheadType="Solid" HeadSize="1000" ArrowheadCenterSize="875" ArrowheadWidth="250" AngularSize="-134.61" Head3D="133.18 80.41 0" Tail3D="118.63 81.48 0" Center3D="126.13 83.99 0" MajorAxisEnd3D="134.03 83.99 0" MinorAxisEnd3D="126.13 91.89 0" ArrowheadHead="Full"/>
+<t id="13" p="85.31 105.29" BoundingBox="60.29 96.29 110.32 107.79" Z="8" Justification="Center" LineHeight="auto"><s font="3" size="10" face="0">protonation</s></t>
+<arrow id="14" Z="9" BoundingBox="145.42 81.05 195.82 88.25" FillType="None" ArrowheadType="Solid" HeadSize="1000" ArrowheadCenterSize="875" ArrowheadWidth="250" Head3D="192.22 84.65 0" Tail3D="149.02 84.65 0" ArrowheadHead="Full"/>
+<fragment id="15" BoundingBox="206.62 78.05 256.05 91.25" Z="10"><n id="16" p="236.78 83.65" NumHydrogens="2" Charge="1"><t p="236.78 87.15" Justification="Center"><s font="3" size="10" face="96">CH2+</s></t></n><n id="17" p="222.38 83.65" NumHydrogens="3"><t p="222.38 87.15" Justification="Center"><s font="3" size="10" face="96">CH3</s></t></n><b id="18" B="16" E="17"/></fragment>
+<t id="19" p="268.2 88.18" BoundingBox="264.69 77.38 271.7 91.18" Z="11" Justification="Center" LineHeight="auto" InterpretChemically="no"><s font="3" size="12" face="0">+</s></t>
+<fragment id="20" BoundingBox="280.34 79.05 295.54 90.25" Z="12"><n id="21" p="287.94 84.65" Element="35" NumHydrogens="0" Charge="-1"><t p="287.94 88.15" Justification="Center"><s font="3" size="10" face="96">Br-</s></t></n></fragment>
+<arrow id="22" Z="13" BoundingBox="225.79 38.4 284.38 96.99" FillType="None" ArrowheadType="Solid" HeadSize="1000" ArrowheadCenterSize="875" ArrowheadWidth="250" AngularSize="-90" Head3D="238.87 92.09 0" Tail3D="279.48 83.91 0" Center3D="255.08 67.69 0" MajorAxisEnd3D="284.38 67.69 0" MinorAxisEnd3D="255.08 96.99 0" ArrowheadHead="Full"/>
+<t id="23" p="251.08 112.44" BoundingBox="218.29 103.44 283.87 114.94" Z="14" Justification="Center" LineHeight="auto"><s font="3" size="10" face="0">bromide attack</s></t>
+<arrow id="24" Z="15" BoundingBox="306.34 81.05 356.74 88.25" FillType="None" ArrowheadType="Solid" HeadSize="1000" ArrowheadCenterSize="875" ArrowheadWidth="250" Head3D="353.14 84.65 0" Tail3D="309.94 84.65 0" ArrowheadHead="Full"/>
+<fragment id="25" BoundingBox="367.54 75.73 404.12 93.57" Z="16"><n id="26" p="399.08 87.99"/><n id="27" p="386.62 80.77"/><n id="28" p="374.14 87.97" Element="35" NumHydrogens="0"/><b id="29" B="26" E="27"/><b id="30" B="27" E="28"/></fragment>
+<t id="31" p="385.83 107.61" BoundingBox="356.37 98.61 415.29 110.11" Z="17" Justification="Center" LineHeight="auto"><s font="3" size="10" face="0">bromoethane</s></t>
+<scheme id="35"><step id="33" ReactionStepReactants="2 7" ReactionStepProducts="15 20" ReactionStepArrows="14" ReactionStepPlusses="6 19"/><step id="34" ReactionStepReactants="15 20" ReactionStepProducts="25" ReactionStepArrows="24" ReactionStepPlusses="19"/></scheme>
+</page>
+</CDXML>

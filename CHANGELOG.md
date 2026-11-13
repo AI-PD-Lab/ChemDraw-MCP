@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+- Mechanism arrows: label boxes of explicitly labelled atoms now follow ChemDraw's hydrogens-first layout ("H3C"), so heads no longer land on the hydrogens; heads keep clear of charge superscripts (also for bond-forming arrows); bond-sourced tails start closer to the bond.
 - README rewritten around a gallery of ChemDraw renders (mechanisms, reactions, schemes, NMR); reference material moved to `docs/detailed.md`; `examples/make_gallery.py` regenerates the images.
 
 ## 0.1.0 - 2026-11-07

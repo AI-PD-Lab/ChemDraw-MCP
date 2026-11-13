@@ -57,7 +57,7 @@ LABEL_OFFSET = 0.42         # arrow head outside a labelled atom (O, N, Cl, char
 LONE_PAIR_OFFSET = 0.5      # arrow tail leaving a lone pair / anion
 MAX_ATOM_OFFSET = 0.6       # normally never further than this from the referenced atom ...
 MAX_LABEL_OFFSET = 1.0      # ... unless a wide label ("OH-", "H3N+") has to be cleared
-BOND_OFFSET = 0.35          # arrow end beside a bond midpoint
+BOND_OFFSET = 0.22          # arrow end beside a bond midpoint (ChemDraw starts bond arrows on the bond itself)
 MIN_CLEARANCE = 0.3         # keep arrow ends this far from other atoms
 MIN_SWEEP, MAX_SWEEP = 90.0, 150.0   # arc sweep range (degrees): clearly visible hooks at ACS size
 
@@ -541,6 +541,7 @@ class FragmentGeometry:
     neighbors: List[List[int]] = field(default_factory=list)
     bond_orders: Dict[Tuple[int, int], str] = field(default_factory=dict)
     label_boxes: Dict[int, Box] = field(default_factory=dict)  # estimated label box per labelled atom (when recorded)
+    label_sides: Dict[int, str] = field(default_factory=dict)  # 'left' (hydrogens first, 'H3C'), 'right' ('OH') or 'center'
 
     @property
     def n_atoms(self) -> int:
@@ -648,6 +649,7 @@ def fragment_geometry(doc: CDXMLDocument, ref: ObjRef, index: int = 0, mol: Any 
         try:
             i = int(lab["atom"])
             geom.label_boxes[i] = Box(*[float(v) for v in lab["box"]])
+            geom.label_sides[i] = str(lab.get("side") or "center")
             if 0 <= i < n:
                 geom.labelled[i] = True
         except (KeyError, TypeError, ValueError):
@@ -703,6 +705,9 @@ class _Stage:
         if key[1] < 0 or key[1] >= fr.n_atoms:
             raise ValueError("atom %d out of range for fragment %d (%d atoms)" % (key[1], key[0], fr.n_atoms))
         return fr.positions[key[1]]
+
+    def label_side(self, key: AtomKey) -> str:
+        return self.frag(key[0]).label_sides.get(key[1], "center")
 
     def label_box(self, key: AtomKey) -> Optional[Box]:
         return self.frag(key[0]).label_boxes.get(key[1])
@@ -778,6 +783,13 @@ def _atom_endpoint(stage: _Stage, key: AtomKey, other: Optional[Point], centroid
     toward_w, apart = (0.8, 0.6 * L) if role == "tail" else (0.3, 1.0 * L)
     bond_dirs = [_unit(_sub(frag.positions[j], p)) for j in frag.neighbors[i] if _dist(frag.positions[j], p) > 1e-6]
     h_dir = _hydrogen_direction(frag, i, bond_dirs) if lbox is None else None
+    charge_pt = (0.0, 0.0)
+    if charge_dir is not None:
+        cc = _charge_corner(p, lbox)
+        charge_pt = (cc[0] - (2.5 if cc[0] > p[0] else -2.5), cc[1] + 2.0)
+    hs_dir = None                         # side of the label that carries the hydrogens of "H3C" / "OH"
+    if lbox is not None and frag.hydrogens[i] > 0 and stage.label_side(key) in ("left", "right"):
+        hs_dir = (-1.0, 0.0) if stage.label_side(key) == "left" else (1.0, 0.0)
     if not bond_dirs and other is not None and lbox is None:
         h_dir = None                      # isolated atom: nothing but the partner decides the side
     others = stage.atoms_except([key])
@@ -802,6 +814,13 @@ def _atom_endpoint(stage: _Stage, key: AtomKey, other: Optional[Point], centroid
             c = _dot(d, charge_dir)
             if c > 0:
                 score -= 1.2 * c * c                    # do not cover the charge superscript
+            cd = _dist(pt, charge_pt)
+            if cd < 0.65 * L:
+                score -= 4.0 * (0.65 * L - cd) / L      # ... nor touch it
+        if hs_dir is not None:
+            c = _dot(d, hs_dir)
+            if c > 0:
+                score -= 2.5 * c * c                    # ends point at the atom's symbol, not at its hydrogens ("H3C")
         if other is not None:
             v = _sub(other, p)
             nv = _norm(v)
@@ -898,8 +917,37 @@ def _new_bond_endpoint(stage: _Stage, a: AtomKey, b: AtomKey, source_atoms: Sequ
             n = _mul(n, -1.0)
         return _add(m, _mul(n, 0.2 * L))
     u = _unit(_sub(s, e))
-    off = max(_clamp(0.5 * _dist(s, e), 0.4 * L, MAX_ATOM_OFFSET * L),
-              min(_exit_distance(e, u, stage.label_box(ekey)) + 0.06 * L, MAX_LABEL_OFFSET * L))
+    lbox = stage.label_box(ekey)
+    frag_e = stage.frag(ekey[0])
+    charge_pt = None
+    if lbox is not None and frag_e.charges[ekey[1]]:
+        cc = _charge_corner(e, lbox)
+        charge_pt = (cc[0] - (2.5 if cc[0] > e[0] else -2.5), cc[1] + 2.0)
+    hs_dir = None
+    if lbox is not None and frag_e.hydrogens[ekey[1]] > 0 and stage.label_side(ekey) in ("left", "right"):
+        hs_dir = (-1.0, 0.0) if stage.label_side(ekey) == "left" else (1.0, 0.0)
+    base_off = _clamp(0.5 * _dist(s, e), 0.4 * L, MAX_ATOM_OFFSET * L)
+    if charge_pt is not None or hs_dir is not None:
+        # swing the approach direction (up to 75 degrees either way) away from the charge sign and the hydrogens
+        best_u, best_sc = u, -1e9
+        for k in range(-15, 16):
+            th = math.radians(5.0 * k)
+            cu = (u[0] * math.cos(th) - u[1] * math.sin(th), u[0] * math.sin(th) + u[1] * math.cos(th))
+            o = max(base_off, min(_exit_distance(e, cu, lbox) + 0.06 * L, MAX_LABEL_OFFSET * L))
+            cand = _add(e, _mul(cu, o))
+            sc = -abs(k) * 0.02
+            if charge_pt is not None:
+                cd = _dist(cand, charge_pt)
+                if cd < 0.7 * L:
+                    sc -= 4.0 * (0.7 * L - cd) / L
+            if hs_dir is not None:
+                c = _dot(cu, hs_dir)
+                if c > 0:
+                    sc -= 2.5 * c * c
+            if sc > best_sc:
+                best_sc, best_u = sc, cu
+        u = best_u
+    off = max(base_off, min(_exit_distance(e, u, lbox) + 0.06 * L, MAX_LABEL_OFFSET * L))
     pt = _add(e, _mul(u, off))
     n = _perp(u)
     v = _sub(pt, centroid)

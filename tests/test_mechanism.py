@@ -59,7 +59,7 @@ def assert_near_bond(point, ref, i, j, L):
     pos = mechanism.fragment_atom_positions(_DOC[0], ref)
     mid = ((pos[i][0] + pos[j][0]) / 2.0, (pos[i][1] + pos[j][1]) / 2.0)
     d = dist(point, mid)
-    assert 0.2 * L <= d <= 0.5 * L, "end %s is %.2f L from the midpoint of bond %d-%d" % (point, d / L, i, j)
+    assert 0.1 * L <= d <= 0.5 * L, "end %s is %.2f L from the midpoint of bond %d-%d" % (point, d / L, i, j)
     assert dist(point, pos[i]) <= 0.85 * L and dist(point, pos[j]) <= 0.85 * L
 
 
@@ -298,9 +298,9 @@ def test_sn2_two_fragments_per_stage():
     c_pos = mechanism.fragment_atom_positions(doc, chloromethane)[0]
     assert lp.extra["head"][0] < c_pos[0]                        # approaches from the hydroxide side
     assert lp.extra["target"]["kind"] == "new_bond" and lp.extra["fragment_ids"] == [hydroxide.id, chloromethane.id]
-    # C-Cl bond tail beside the bond (>= 0.3 L off the bond line), head beside the chlorine, clearly visible hook
+    # C-Cl bond tail on the bond (0.1-0.5 L off the bond line), head beside the chlorine, clearly visible hook
     assert_near_bond(cl.extra["tail"], chloromethane, 0, 1, L)
-    assert abs(cl.extra["tail"][1] - mechanism.fragment_atom_positions(doc, chloromethane)[0][1]) >= 0.3 * L
+    assert abs(cl.extra["tail"][1] - mechanism.fragment_atom_positions(doc, chloromethane)[0][1]) >= 0.1 * L
     assert_near_atom(cl.extra["head"], chloromethane, 1, L)
     assert dist(cl.extra["tail"], cl.extra["head"]) >= 0.8 * L
     for a in arrows:
@@ -483,7 +483,7 @@ def test_tiny_structures_get_atom_labels():
     assert labelled_atoms(acetone) == 0                                               # normal skeletal drawing
     assert labelled_atoms(hydroxide) == 1 and labelled_atoms(chloride) == 1            # single ions are tiny too
     assert labelled_atoms(plain) == 0                                                 # explicit override wins
-    assert [lab["text"] for lab in chloromethane.extra["labels"]] == ["CH3", "Cl"]
+    assert [lab["text"] for lab in chloromethane.extra["labels"]] == ["H3C", "Cl"]      # ChemDraw draws the carbon label hydrogens-first when the bond is on its right
     # atom indices are unaffected and arrow ends stay outside the (wider) labels
     lp, cl = electron_arrows(doc)[:2]
     assert lp.extra["target"]["atoms"] == [[0, 0], [1, 0]]

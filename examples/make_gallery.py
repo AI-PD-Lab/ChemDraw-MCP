@@ -48,6 +48,13 @@ def entries():
                 {"structures": ["N#CC(C)(C)[O-]", "[H][OH2+]"], "arrows": ["lp:0:5->0:5-1:0", "1:0-1:1->1:1"], "label": "proton transfer"},
                 {"structures": ["N#CC(C)(C)O", "O"], "label": "acetone cyanohydrin"},
             ])),
+        "hbr": ("draw_mechanism", dict(
+            title="Electrophilic addition of HBr to ethene",
+            stages=[
+                {"structures": ["C=C", "[H]Br"], "arrows": ["0:0=0:1->0:0-1:0", "1:0-1:1->1:1"], "label": "protonation"},
+                {"structures": ["[CH2+]C", "[Br-]"], "arrows": ["lp:1:0->1:0-0:0"], "label": "bromide attack"},
+                {"structures": ["CCBr"], "label": "bromoethane"},
+            ])),
         "esterification": ("draw_reaction", dict(
             reaction="acetic acid + ethanol --[H2SO4 (cat.)]--> ethyl acetate + water",
             conditions_below=["reflux, 4 h"], product_labels=["85%", None], arrow="equilibrium")),

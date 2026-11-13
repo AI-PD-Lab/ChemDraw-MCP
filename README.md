@@ -35,6 +35,10 @@ them out with reaction arrows between the stages.
 
 <p align="center"><img src="docs/images/cyanohydrin.png" width="820" alt="Cyanohydrin formation mechanism"></p>
 
+> *"Show the electrophilic addition of HBr to ethene step by step with curved arrows."*
+
+<p align="center"><img src="docs/images/hbr.png" width="820" alt="Electrophilic addition of HBr to ethene"></p>
+
 ### Reactions
 
 > *"Draw the Fischer esterification of acetic acid with ethanol, H2SO4 (cat.) above the arrow, reflux 4 h below,

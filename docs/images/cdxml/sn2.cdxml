@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE CDXML SYSTEM "http://www.cambridgesoft.com/xml/cdxml.dtd" >
 <CDXML CreationProgram="chemdrawmcp" Name="mechanism"
- BoundingBox="17.73 36.6 284.44 112.91"
+ BoundingBox="20.38 36.6 291.54 118.54"
  WindowPosition="0 0" WindowSize="0 0"
  FractionalWidths="yes"
  InterpretChemically="yes" ShowAtomQuery="yes" ShowAtomStereo="no" ShowAtomEnhancedStereo="yes"
@@ -32,15 +32,15 @@
 <t id="1" p="36 46.5" BoundingBox="36 36.6 196.49 49.25" Z="2" Justification="Left" LineHeight="auto"><s font="3" size="11" face="1">SN2: hydroxide + chloromethane</s></t>
 <fragment id="2" BoundingBox="36 79.05 56.2 90.25" Z="3"><n id="3" p="46.1 84.65" Element="8" NumHydrogens="1" Charge="-1"><t p="46.1 88.15" Justification="Center"><s font="3" size="10" face="96">OH-</s></t></n></fragment>
 <t id="4" p="68.34 88.18" BoundingBox="64.84 77.38 71.85 91.18" Z="4" Justification="Center" LineHeight="auto" InterpretChemically="no"><s font="3" size="12" face="0">+</s></t>
-<fragment id="5" BoundingBox="80.49 78.05 111.69 91.25" Z="5"><n id="6" p="90.97 83.65" NumHydrogens="3"><t p="90.97 87.15" Justification="Center"><s font="3" size="10" face="96">CH3</s></t></n><n id="7" p="105.37 83.65" Element="17" NumHydrogens="0"><t p="105.37 87.15" Justification="Center"><s font="3" size="10" face="96">Cl</s></t></n><b id="8" B="6" E="7"/></fragment>
-<arrow id="9" Z="6" BoundingBox="43.06 56.58 81.44 94.96" FillType="None" ArrowheadType="Solid" HeadSize="1000" ArrowheadCenterSize="875" ArrowheadWidth="250" AngularSize="102.6" Head3D="79.63 83.9 0" Tail3D="50.52 90.96 0" Center3D="62.25 75.77 0" MajorAxisEnd3D="81.44 75.77 0" MinorAxisEnd3D="62.25 94.96 0" ArrowheadHead="Full"/>
-<arrow id="10" Z="7" BoundingBox="97.13 74.98 112.69 90.55" FillType="None" ArrowheadType="Solid" HeadSize="1000" ArrowheadCenterSize="875" ArrowheadWidth="250" AngularSize="-135.04" Head3D="112.5 81.05 0" Tail3D="98.33 78.61 0" Center3D="104.91 82.76 0" MajorAxisEnd3D="112.69 82.76 0" MinorAxisEnd3D="104.91 90.55 0" ArrowheadHead="Full"/>
-<t id="11" p="74.97 110.41" BoundingBox="17.73 101.41 132.22 112.91" Z="8" Justification="Center" LineHeight="auto"><s font="3" size="10" face="0">backside attack, inversion</s></t>
-<arrow id="12" Z="9" BoundingBox="143.02 81.05 193.42 88.25" FillType="None" ArrowheadType="Solid" HeadSize="1000" ArrowheadCenterSize="875" ArrowheadWidth="250" Head3D="189.82 84.65 0" Tail3D="146.62 84.65 0" ArrowheadHead="Full"/>
-<fragment id="13" BoundingBox="204.22 78.05 238.2 91.25" Z="10"><n id="14" p="214.7 83.65" NumHydrogens="3"><t p="214.7 87.15" Justification="Center"><s font="3" size="10" face="96">CH3</s></t></n><n id="15" p="229.1 83.65" Element="8" NumHydrogens="1"><t p="229.1 87.15" Justification="Center"><s font="3" size="10" face="96">OH</s></t></n><b id="16" B="14" E="15"/></fragment>
-<t id="17" p="250.35 88.18" BoundingBox="246.84 77.38 253.85 91.18" Z="11" Justification="Center" LineHeight="auto" InterpretChemically="no"><s font="3" size="12" face="0">+</s></t>
-<fragment id="18" BoundingBox="262.49 79.05 277.13 90.25" Z="12"><n id="19" p="269.81 84.65" Element="17" NumHydrogens="0" Charge="-1"><t p="269.81 88.15" Justification="Center"><s font="3" size="10" face="96">Cl-</s></t></n></fragment>
-<t id="20" p="240.67 105.29" BoundingBox="196.9 96.29 284.44 107.79" Z="13" Justification="Center" LineHeight="auto"><s font="3" size="10" face="0">methanol + chloride</s></t>
+<fragment id="5" BoundingBox="80.49 78.05 116.97 91.25" Z="5"><n id="6" p="96.25 83.65" NumHydrogens="3"><t p="96.25 87.15" Justification="Center"><s font="3" size="10" face="96">CH3</s></t></n><n id="7" p="110.65 83.65" Element="17" NumHydrogens="0"><t p="110.65 87.15" Justification="Center"><s font="3" size="10" face="96">Cl</s></t></n><b id="8" B="6" E="7"/></fragment>
+<arrow id="9" Z="6" BoundingBox="42.03 38.82 103.78 100.57" FillType="None" ArrowheadType="Solid" HeadSize="1000" ArrowheadCenterSize="875" ArrowheadWidth="250" AngularSize="90" Head3D="94.17 92.09 0" Tail3D="50.52 90.96 0" Center3D="72.91 69.7 0" MajorAxisEnd3D="103.78 69.7 0" MinorAxisEnd3D="72.91 100.57 0" ArrowheadHead="Full"/>
+<arrow id="10" Z="7" BoundingBox="102.57 76.28 118.17 91.88" FillType="None" ArrowheadType="Solid" HeadSize="1000" ArrowheadCenterSize="875" ArrowheadWidth="250" AngularSize="-134.98" Head3D="117.8 81.73 0" Tail3D="103.45 80.48 0" Center3D="110.37 84.08 0" MajorAxisEnd3D="118.17 84.08 0" MinorAxisEnd3D="110.37 91.88 0" ArrowheadHead="Full"/>
+<t id="11" p="77.62 116.04" BoundingBox="20.38 107.04 134.87 118.54" Z="8" Justification="Center" LineHeight="auto"><s font="3" size="10" face="0">backside attack, inversion</s></t>
+<arrow id="12" Z="9" BoundingBox="145.67 81.05 196.07 88.25" FillType="None" ArrowheadType="Solid" HeadSize="1000" ArrowheadCenterSize="875" ArrowheadWidth="250" Head3D="192.47 84.65 0" Tail3D="149.27 84.65 0" ArrowheadHead="Full"/>
+<fragment id="13" BoundingBox="206.87 78.05 249.74 91.25" Z="10"><n id="14" p="222.63 83.65" NumHydrogens="3"><t p="222.63 87.15" Justification="Center"><s font="3" size="10" face="96">CH3</s></t></n><n id="15" p="237.03 83.65" Element="8" NumHydrogens="1"><t p="237.03 87.15" Justification="Center"><s font="3" size="10" face="96">OH</s></t></n><b id="16" B="14" E="15"/></fragment>
+<t id="17" p="261.89 88.18" BoundingBox="258.38 77.38 265.39 91.18" Z="11" Justification="Center" LineHeight="auto" InterpretChemically="no"><s font="3" size="12" face="0">+</s></t>
+<fragment id="18" BoundingBox="274.03 79.05 288.67 90.25" Z="12"><n id="19" p="281.35 84.65" Element="17" NumHydrogens="0" Charge="-1"><t p="281.35 88.15" Justification="Center"><s font="3" size="10" face="96">Cl-</s></t></n></fragment>
+<t id="20" p="247.77 105.29" BoundingBox="204 96.29 291.54 107.79" Z="13" Justification="Center" LineHeight="auto"><s font="3" size="10" face="0">methanol + chloride</s></t>
 <scheme id="23"><step id="22" ReactionStepReactants="2 5" ReactionStepProducts="13 18" ReactionStepArrows="12" ReactionStepPlusses="4 17"/></scheme>
 </page>
 </CDXML>

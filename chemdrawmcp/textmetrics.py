@@ -427,7 +427,8 @@ def fragment_labels(mol, pts: Sequence[Tuple[float, float]], size: float, label_
                 sx += (nx - x) / d
                 sy += (ny - y) / d
         mean_dx = sx / deg if deg else 0.0
-        side = "center" if explicit else _label_side(deg, mean_dx)
+        # ChemDraw re-lays out explicit labels too ("CH3" next to a bond on its right becomes "H3C", the symbol on the node)
+        side = _label_side(deg, mean_dx)
         if full:
             if z == 0:
                 sym = atom.GetProp("dummyLabel") if atom.HasProp("dummyLabel") else (
